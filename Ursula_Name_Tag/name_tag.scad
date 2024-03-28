@@ -38,10 +38,11 @@ module ear(x = 0, y = 0) {
 
 module base(width, height) {
     dx = width - ear_width;
-    
+    ear_dx = ear_width + ear_thickness;
+
     union() {
         translate([0, 0, base_height / 2])
-            cube([width - 12, height, base_height], center = true);        
+            cube([width - ear_dx * 2, height, base_height], center = true);        
         ear(dx);
         ear(-dx);
     }
