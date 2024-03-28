@@ -1,7 +1,7 @@
 // https://github.com/adrianschlatter/threadlib?tab=readme-ov-file#installation
 use <threadlib/threadlib.scad>
 
-ring_thickness = 6;
+ring_thickness = 5.68;
 ring_inner_diameter = 14;
 
 ring_inner_radius = ring_inner_diameter / 2;
@@ -11,7 +11,7 @@ ring_outer_radius = ring_inner_radius + extrusion_circle_radius;
 module ring() {
     rotate_extrude($fn = 100)
     translate([ring_outer_radius, 0, 0])
-    circle(r = extrusion_circle_radius, $fn = 120);
+    circle(r = extrusion_circle_radius, $fn = 6);
 }
 
 module screw_cilinder(turns = 5, extra_length = 2) {
@@ -30,15 +30,21 @@ module screw_cilinder(turns = 5, extra_length = 2) {
     };
 };
 
-union() {
-    translate([0, extrusion_circle_radius + ring_outer_radius, 0])
- 	ring();
-    
- 	rotate ([90, 0, 0])
-    translate([0, 0, -1])
-    screw_cilinder();
-}
+translate([0, 0, ring_thickness/2 - 0.4])
+difference()
+{
+    union() {
+        translate([0, extrusion_circle_radius + ring_outer_radius, 0])
+        ring();
+        
+        rotate ([90, 0, 0])
+        translate([0, 0, -1])
+        screw_cilinder();
+    }
 
+    translate([0, 10, -7.45])
+        cube([40, 40, 10], center = true);
+}
 // References:
 // Test screw excessive length = 5.4 - 4.1 = 1.3mm
 // Test screw total stem length = 9.2mm
