@@ -13,11 +13,13 @@ font_face = "Fira Sans Condensed:style=SemiBold";
 font_thickness = 0.6;
 
 
-module roundedcube(xdim,ydim,zdim,rdim){
+module roundedcube(xdim, ydim, zdim, rdim) {
 
-    translate([0,0,base_height/2]) cube([xdim-rdim*3,ydim,base_height],center=true);
-    ydim2=ydim +1;
-    zdim2=zdim+0.2;
+    translate([0, 0, base_height / 2])
+        cube([xdim - rdim * 3, ydim, base_height], center=true);
+    
+    ydim2 = ydim + 1;
+    zdim2 = zdim + 0.2;
     HoleRoundedDivisor = 1.1;
     
     difference() {
@@ -59,7 +61,6 @@ module textline(t,s,yp) {
 module model() {
     textline(line1, 4.7, 1.4); 
     textline(line2, 4.7, -5.6);
-    roundedcube(LengthFactor*21,15,base_height,4);
+    roundedcube(LengthFactor * 21, 15, base_height, 4);
 }
 model();
-
