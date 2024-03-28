@@ -4,7 +4,7 @@ use <scad-utils/lists.scad>
 // Ruler sides definition
 // Clockwise from the top left corner
 // Negative value = cutout with the width of that value
-top = [30, -9, 15, -9, 7, -9, 5];
+top = [30, -9, 15, -9, 7, -9, 5]; // [
 right = [40];
 bottom = [50, -9, 25];
 left = [20, -10, 10];
@@ -14,7 +14,7 @@ letter_height = 0.4;
 ruler_thickness = 2;
 font_face = "Ubuntu:style=Medium"; // Thin, Regular, Medium...
 font_size = 5;
-text_margin = 2;
+text_margin = 1;
 
 assert(sumAbs(top) == sumAbs(bottom), "Top ≠ Bottom, (absolute sums should be equal)");
 assert(sumAbs(right) == sumAbs(left), "Right ≠ Left (absolute sums should be equal)");
@@ -25,49 +25,57 @@ ruler_height = sumAbs(left);
 
 module shape2d() {
     rect = [[0,0], [ruler_width,0], [ruler_width,ruler_height], [0,ruler_height]];
+    rect_coord_idx = range([0 : len(rect) - 1]);
     
-    cutouts = concat(
-        list_cutouts(top, is_reverse = false, is_vertical = false),
-        list_cutouts(right, is_reverse = true, is_vertical = true),
-        list_cutouts(bottom, is_reverse = true, is_vertical = false),
-        list_cutouts(left, is_reverse = false, is_vertical = true)
+    poly = concat(
+        rect,
+        list_cutouts(top, is_reverse = false, is_vertical = false)//,
+        //list_cutouts(reverse(right), is_reverse = true, is_vertical = true),
+        //list_cutouts(reverse(bottom), is_reverse = true, is_vertical = false),
+        //list_cutouts(left, is_reverse = false, is_vertical = true)
     );
     
     polygon(
-        points = rect
+        poly//,
+        //rect_coord_idx
+        //cutouts
     );
 }
 
-function list_cutouts(v, is_reverse = false, is_vertical = false) = 
+// output = [ for (x = input) map(x) ];
+
+function list_cutouts(values, is_reverse = false, is_vertical = false) = 
     let(
-        values = is_reverse ? reverse(v) : v,
         // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Cumulative_sum
-        coords = [for (a=0, b=values[0]; a < len(values); a = a+1, b = b+(values[a]==undef?0:abs(values[a]))) b],
-        range = is_reverse ? [len(values) - 1 : -1 : 0] : [0 : 1 : len(values) - 1],
+        coords = relative_coords(values),
         rotation = is_vertical ? (is_reverse ? 90 : 270) : (is_reverse ? 0 : 180)
-    ) [for (idx = range) if (values[idx] < 0) [
-        idx,
-        abs(values[idx]),
-        // ...
+    ) [for (idx = [0 : len(values) - 1]) if (values[idx] < 0) [
+        [is_vertical ? 0 : coords[idx], // X1
+        is_vertical ? coords[idx] : 0], // Y1
+        [is_vertical ? 0 : coords[idx] + abs(values[idx]), // X2
+        is_vertical ? coords[idx] + abs(values[idx]) : 0],  // Y2
+        // X3
+        // Y3
+        // X4
+        // Y4
     ]];
 
 
-module text2d(v, is_reverse = false, is_vertical = false) {
-    values = is_reverse ? reverse(v) : v;
-    
+module text2d(values, is_reverse = false, is_vertical = false) {
     // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Cumulative_sum
     coords = [
-        for (a=0, b=values[0]; a < len(values); a = a+1, b = b+(values[a]==undef?0:abs(values[a]))) b
+        for (
+            a = 0, b = values[0];
+            a < len(values);
+            a = a + 1, b = b + ( values[a] == undef ? 0 : abs(values[a]) )
+        ) b - abs(values[a]) / 2 // center of the segment
     ];
-        
-    range = is_reverse ? [len(values) - 1 : -1 : 0] : [0 : 1 : len(values) - 1];
     rotation = is_vertical ? (is_reverse ? 90 : 270) : (is_reverse ? 0 : 180);
     
-    for (idx = range) {
+    for (idx = [0 : len(values) - 1]) {
         if (values[idx] > 0) {
-            coord = coords[idx] - values[idx] / 2;
-            tx = is_vertical ? (is_reverse ? ruler_width - text_margin : text_margin) : coord;
-            ty = is_vertical ? coord : (is_reverse ? text_margin : ruler_height - text_margin);
+            tx = is_vertical ? (is_reverse ? ruler_width - text_margin : text_margin) : coords[idx];
+            ty = is_vertical ? coords[idx] : (is_reverse ? text_margin : ruler_height - text_margin);
             
             translate([tx, ty, 0])
                 rotate([0, 0, rotation])
@@ -84,10 +92,26 @@ module text2d(v, is_reverse = false, is_vertical = false) {
     }
 }
 
+// https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Cumulative_sum
+function relative_coords(vec) = [
+    for (
+        a = 0, b = values[0];
+        a < len(values);
+        a = a + 1, b = b + ( values[a] == undef ? 0 : abs(values[a]) )
+    ) b
+];
+
+function relative_coord_center(vec) = [
+    
+];
+
+
+
+
 module labels() {
     text2d(top, is_reverse = false, is_vertical = false);
-    text2d(right, is_reverse = true, is_vertical = true);
-    text2d(bottom, is_reverse = true, is_vertical = false);
+    text2d(reverse(right), is_reverse = true, is_vertical = true);
+    text2d(reverse(bottom), is_reverse = true, is_vertical = false);
     text2d(left, is_reverse = false, is_vertical = true);
 }
 
