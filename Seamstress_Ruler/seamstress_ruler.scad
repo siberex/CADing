@@ -16,9 +16,9 @@ left = [10, -10, 20];
 right = [40];
 
 cutout_depth = 10;
-letter_height = 0.4;
-ruler_thickness = 2;
-font_face = "Ubuntu:style=Medium"; // Thin, Regular, Medium...
+letter_height = 0.2;
+ruler_thickness = 1;
+font_face = "Poppins:style=Medium"; // Thin, Regular, Medium...
 font_size = 5;
 text_margin = 1;
 
@@ -81,7 +81,7 @@ module text2d(values, is_opposite = false, is_vertical = false) {
                         $fn = 16,
                         valign = "bottom",
                         halign = "center",
-                        spacing = 0.9
+                        spacing = 1
                     );
         }
     }
