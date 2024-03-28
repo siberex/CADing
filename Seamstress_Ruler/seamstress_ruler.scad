@@ -9,7 +9,7 @@ right = [40];
 bottom = [50, -9, 25];
 left = [20, -10, 10];
 
-indent_depth = 10;
+cutout_depth = 10;
 letter_height = 0.4;
 ruler_thickness = 2;
 font_face = "Ubuntu:style=Medium"; // Thin, Regular, Medium...
@@ -27,49 +27,54 @@ module shape2d() {
     rect = [[0,0], [ruler_width,0], [ruler_width,ruler_height], [0,ruler_height]];
     rect_coord_idx = range([0 : len(rect) - 1]);
     
+
+    cutouts_top = list_cutouts(top, is_reverse = false, is_vertical = false);
+    cutouts_bottom = list_cutouts(bottom, is_reverse = true, is_vertical = false);
+    
+    //cutouts = concat(cutouts_top, cutouts_bottom);
+    
+    cutouts = cutouts_bottom;
+    
+    points = [ for (idx = [0 : len(cutouts)]) range([ idx*4 : idx*4+3 ]) ];   
+    
     poly = concat(
         rect,
-        list_cutouts(top, is_reverse = false, is_vertical = false)//,
-        //list_cutouts(reverse(right), is_reverse = true, is_vertical = true),
-        //list_cutouts(reverse(bottom), is_reverse = true, is_vertical = false),
-        //list_cutouts(left, is_reverse = false, is_vertical = true)
+        flatten(cutouts)
     );
     
     polygon(
-        poly//,
-        //rect_coord_idx
-        //cutouts
+        poly,
+        points
     );
 }
 
-// output = [ for (x = input) map(x) ];
 
 function list_cutouts(values, is_reverse = false, is_vertical = false) = 
     let(
-        // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Cumulative_sum
         coords = relative_coords(values),
         rotation = is_vertical ? (is_reverse ? 90 : 270) : (is_reverse ? 0 : 180)
-    ) [for (idx = [0 : len(values) - 1]) if (values[idx] < 0) [
-        [is_vertical ? 0 : coords[idx], // X1
-        is_vertical ? coords[idx] : 0], // Y1
-        [is_vertical ? 0 : coords[idx] + abs(values[idx]), // X2
-        is_vertical ? coords[idx] + abs(values[idx]) : 0],  // Y2
-        // X3
-        // Y3
-        // X4
-        // Y4
-    ]];
+    ) [for (idx = [0 : len(values) - 1]) if (values[idx] < 0) get_rect(
+        
+        is_reverse ? ruler_width - coords[idx] - abs(values[idx]) : coords[idx], // X1
+        is_reverse ? cutout_depth : ruler_height, // Y1
+        abs(values[idx]),
+        is_reverse,
+        is_vertical
+    
+    
+    
+        //[coords[idx], // X2
+        //ruler_height - cutout_depth], // Y2
+        //[coords[idx] + abs(values[idx]), // X3
+        //ruler_height - cutout_depth], // Y3
+        //[coords[idx] + abs(values[idx]), // X4
+        //ruler_height], // Y4
+    
+    )];
 
 
 module text2d(values, is_reverse = false, is_vertical = false) {
-    // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Cumulative_sum
-    coords = [
-        for (
-            a = 0, b = values[0];
-            a < len(values);
-            a = a + 1, b = b + ( values[a] == undef ? 0 : abs(values[a]) )
-        ) b - abs(values[a]) / 2 // center of the segment
-    ];
+    coords = relative_centers(values);
     rotation = is_vertical ? (is_reverse ? 90 : 270) : (is_reverse ? 0 : 180);
     
     for (idx = [0 : len(values) - 1]) {
@@ -88,21 +93,34 @@ module text2d(values, is_reverse = false, is_vertical = false) {
                         halign = "center",
                         spacing = 0.9
                     );
-        }   
+        }
     }
 }
+
+function get_rect(x1, y1, val, is_reverse = false, is_vertical = false) = 
+    let(
+        aX = x1,
+        aY = y1,
+        bX = aX + val,
+        bY = aY - cutout_depth
+    ) [
+        [aX, aY],
+        [aX, bY],
+        [bX, bY],
+        [bX, aY]
+    ];
 
 // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Cumulative_sum
 function relative_coords(vec) = [
     for (
-        a = 0, b = values[0];
-        a < len(values);
-        a = a + 1, b = b + ( values[a] == undef ? 0 : abs(values[a]) )
-    ) b
+        a = 0, b = vec[0];
+        a < len(vec);
+        a = a + 1, b = b + ( vec[a] == undef ? 0 : abs(vec[a]) )
+    ) b - abs(vec[a]) // relative start of the segment
 ];
 
-function relative_coord_center(vec) = [
-    
+function relative_centers(vec) = let(coords = relative_coords(vec)) [
+    for (idx = [0 : len(vec) - 1]) coords[idx] + abs(vec[idx]) / 2 // relative center of the segment
 ];
 
 
