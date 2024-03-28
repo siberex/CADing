@@ -10,57 +10,55 @@ LengthFactor = 2.75; // increase this for longer names
 base_height = 1.2; //set this to how thick you want the tag
 //font_face = "Roboto Condensed:style=Bold";
 font_face = "Fira Sans Condensed:style=SemiBold";
+font_size = 4.7;
 font_thickness = 0.6;
 
 
-module roundedcube(xdim, ydim, zdim, rdim) {
+ear_hole_base_offset = 3;
+ear_width = 4 - ear_hole_base_offset;
+ear_height = 16 - ear_hole_base_offset;
+ear_thickness = 2.8;
 
-    translate([0, 0, base_height / 2])
-        cube([xdim - rdim * 3, ydim, base_height], center=true);
+
+module ear(x = 0, y = 0) {
+    rect = [ear_width, ear_height];
+    //#color("red") translate([x / 2, y, 0]) square(rect, center = true);
     
-    ydim2 = ydim + 1;
-    zdim2 = zdim + 0.2;
-    HoleRoundedDivisor = 1.1;
-    
-    difference() {
-        hull() {
-            translate([-xdim/2,ydim2/2,0])cylinder(r=rdim,h=zdim);
-            translate([-xdim/2+rdim,ydim2/2,0])cylinder(r=rdim,h=zdim);
-            translate([-xdim/2,-ydim2/2,0])cylinder(r=rdim,h=zdim);
-            translate([-xdim/2+rdim,-ydim2/2,0])cylinder(r=rdim,h=zdim);
-        }
+    translate([x / 2, y, 0])
+        linear_extrude(base_height)
+            difference() {
+                offset(r = ear_hole_base_offset + ear_thickness) {
+                    square(rect, center = true);
+                }
+                offset(r = ear_hole_base_offset) {
+                    square(rect, center = true);
+                }
+            }
+}
 
-        hull() {
-            translate([-xdim/2+rdim/2,ydim2/2-rdim/2,0])cylinder(r=rdim/HoleRoundedDivisor,h=zdim2);
-            translate([-xdim/2+rdim/2,-ydim2/2+rdim/2,0])cylinder(r=rdim/HoleRoundedDivisor,h=zdim2);
-        }
-    }
+module base(xdim, ydim, zdim, rdim) {
+    union() {
+        translate([0, 0, base_height / 2])
+            cube([xdim - rdim * 3, ydim, base_height], center = true);
+        
+        ear(xdim - ear_width - ear_hole_base_offset);
 
-    difference() {
-        hull() {
-            translate([xdim/2,ydim2/2,0])cylinder(r=rdim,h=zdim);
-            translate([xdim/2-rdim,ydim2/2,0])cylinder(r=rdim,h=zdim);
-            translate([xdim/2,-ydim2/2,0])cylinder(r=rdim,h=zdim);
-            translate([xdim/2-rdim,-ydim2/2,0])cylinder(r=rdim,h=zdim);
-        }
-        hull() {
-            translate([xdim/2-rdim/2,-ydim2/2+rdim/2,0])cylinder(r=rdim/HoleRoundedDivisor,h=zdim2);
-            translate([xdim/2-rdim/2,ydim2/2-rdim/2,0])cylinder(r=rdim/HoleRoundedDivisor,h=zdim2);
-        }
+        ear(-xdim + ear_width + ear_hole_base_offset);
     }
- 
 };
 
-module textline(t,s,yp) {
-    translate([0,yp,base_height])
+module textline(line, size, y_pos) {
+    translate([0, y_pos, base_height])
         linear_extrude(height = font_thickness)
-            text(t, s, font = str(font_face), $fn = 16, halign="center");
+            text(line, size, font = str(font_face), $fn = 16, halign="center", spacing = 1);
 }
 
 
 module model() {
-    textline(line1, 4.7, 1.4); 
-    textline(line2, 4.7, -5.6);
-    roundedcube(LengthFactor * 21, 15, base_height, 4);
+    union() {
+        textline(line1, font_size, 1.4); 
+        textline(line2, font_size, -5.6);
+        base(LengthFactor * 21, 15, base_height, 4);
+    }
 }
 model();
