@@ -14,36 +14,36 @@ font_size = 4.7;
 font_thickness = 0.6;
 
 
-ear_hole_base_offset = 3;
-ear_width = 4 - ear_hole_base_offset;
-ear_height = 16 - ear_hole_base_offset;
+ear_hole_corner_radius = 3;
+ear_width = 4;
+ear_height = 16;
 ear_thickness = 2.8;
 
 
 module ear(x = 0, y = 0) {
-    rect = [ear_width, ear_height];
+    rect = [ear_width - ear_hole_corner_radius, ear_height - ear_hole_corner_radius];
     //#color("red") translate([x / 2, y, 0]) square(rect, center = true);
     
     translate([x / 2, y, 0])
         linear_extrude(base_height)
             difference() {
-                offset(r = ear_hole_base_offset + ear_thickness) {
+                offset(r = ear_hole_corner_radius + ear_thickness) {
                     square(rect, center = true);
                 }
-                offset(r = ear_hole_base_offset) {
+                offset(r = ear_hole_corner_radius) {
                     square(rect, center = true);
                 }
             }
 }
 
-module base(xdim, ydim, zdim, rdim) {
+module base(width, height) {
+    dx = width - ear_width;
+    
     union() {
         translate([0, 0, base_height / 2])
-            cube([xdim - rdim * 3, ydim, base_height], center = true);
-        
-        ear(xdim - ear_width - ear_hole_base_offset);
-
-        ear(-xdim + ear_width + ear_hole_base_offset);
+            cube([width - 12, height, base_height], center = true);        
+        ear(dx);
+        ear(-dx);
     }
 };
 
@@ -58,7 +58,7 @@ module model() {
     union() {
         textline(line1, font_size, 1.4); 
         textline(line2, font_size, -5.6);
-        base(LengthFactor * 21, 15, base_height, 4);
+        base(LengthFactor * 21, 15);
     }
 }
 model();
