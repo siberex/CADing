@@ -16,7 +16,6 @@ module ring() {
     rotate_extrude($fn = 100)
     translate([ring_outer_radius, 0, 0])
     circle(r = extrusion_circle_radius * fudge, $fn = fn);
-    
 }
 
 module screw_cilinder(turns = 5, extra_length = 2) {
@@ -33,10 +32,9 @@ module screw_cilinder(turns = 5, extra_length = 2) {
         translate([0, 0, -P / 2 - extra_length])
             cylinder(h=H, d=Dsupport, $fn=120);
     };
-};
+}
 
 module model()
-    color("red")
     union() {
         translate([0, extrusion_circle_radius + ring_outer_radius, 0])
         ring();
@@ -50,16 +48,8 @@ translate([0, 0, -ring_thickness/2])
 difference()
 {
     model();
-    
-    // See also
-    // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Computing_a_bounding_box
     translate([0, 0, ring_thickness / 2])
         linear_extrude(height=1)
             projection(cut=false)
                 model();
 }
-
-// References:
-// Test screw excessive length = 5.4 - 4.1 = 1.3mm
-// Test screw total stem length = 9.2mm
-// screw_target_depth = 9.2 - 1.3 = 7.9mm
