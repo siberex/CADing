@@ -4,6 +4,12 @@ use <scad-utils/lists.scad>
 // Ruler sides definition
 // Left to right, top to bottom (NOT clockwise or counterclockwise)
 // Negative value means there will be cutout of the respective width
+
+//top = [10, -20, 50];
+//bottom = [15, -10, 20, -10, 25];
+//left = [40];
+//right = [5, -28, 7];
+
 top = [30, -9, 15, -9, 7, -9, 5];
 bottom = [25, -9, 50];
 left = [10, -10, 20];
@@ -25,17 +31,13 @@ ruler_height = sumAbs(left);
 
 module shape2d() {
     rect = [[0,0], [ruler_width,0], [ruler_width,ruler_height], [0,ruler_height]];
-    rect_coord_idx = range([0 : len(rect) - 1]);
-    
 
-    cutouts_top = list_cutouts(top, is_opposite = false, is_vertical = false);
-    cutouts_right = list_cutouts(right, is_opposite = true, is_vertical = true);
-    cutouts_bottom = list_cutouts(bottom, is_opposite = true, is_vertical = false);
-    cutouts_left = list_cutouts(left, is_opposite = false, is_vertical = true);
-    
-    cutouts = concat(cutouts_top, cutouts_bottom);
-    
-    //cutouts = cutouts_left;
+    cutouts = concat(
+        list_cutouts(top, is_opposite = false, is_vertical = false),
+        list_cutouts(bottom, is_opposite = true, is_vertical = false),
+        list_cutouts(left, is_opposite = false, is_vertical = true),
+        list_cutouts(right, is_opposite = true, is_vertical = true)
+    );
     
     points = [ for (idx = [0 : len(cutouts)]) range([ idx*4 : idx*4+3 ]) ];   
     
@@ -44,39 +46,25 @@ module shape2d() {
         flatten(cutouts)
     );
     
-    polygon(
-        poly,
-        points
-    );
+    polygon(poly, points);
 }
 
 
 function list_cutouts(values, is_opposite = false, is_vertical = false) = 
     let(
         coords = relative_coords(values)
-    ) [for (idx = [0 : len(values) - 1]) if (values[idx] < 0) get_rect(
-        
-        coords[idx], // X1
-        is_opposite ? cutout_depth : ruler_height, // Y1
+    ) [for (idx = [0 : len(values) - 1]) if (values[idx] < 0) get_rect(    
+        // X
+        is_vertical ? (is_opposite ? ruler_width - cutout_depth : 0) : coords[idx], 
+        // Y
+        is_vertical ? ruler_height - coords[idx] : (is_opposite ? cutout_depth : ruler_height),
         abs(values[idx]),
-        is_opposite,
         is_vertical
-    
-    
-    
-        //[coords[idx], // X2
-        //ruler_height - cutout_depth], // Y2
-        //[coords[idx] + abs(values[idx]), // X3
-        //ruler_height - cutout_depth], // Y3
-        //[coords[idx] + abs(values[idx]), // X4
-        //ruler_height], // Y4
-    
     )];
 
 
 module text2d(values, is_opposite = false, is_vertical = false) {
     coords = relative_centers(values);
-    echo (coords, is_opposite, is_vertical);
     rotation = is_vertical ? (is_opposite ? 90 : 270) : (is_opposite ? 0 : 180);
     
     for (idx = [0 : len(values) - 1]) {
@@ -99,17 +87,13 @@ module text2d(values, is_opposite = false, is_vertical = false) {
     }
 }
 
-function get_rect(x1, y1, val, is_opposite = false, is_vertical = false) = 
+function get_rect(aX, aY, val, is_vertical = false) = 
     let(
-        aX = x1,
-        aY = y1,
         bX = aX + (is_vertical ? cutout_depth : val),
         bY = aY - (is_vertical ? val : cutout_depth)
     ) [
-        [aX, aY],
-        [aX, bY],
-        [bX, bY],
-        [bX, aY]
+        [aX, aY], [aX, bY],
+        [bX, bY], [bX, aY]
     ];
 
 // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Cumulative_sum
@@ -125,14 +109,16 @@ function relative_centers(vec) = let(coords = relative_coords(vec)) [
     for (idx = [0 : len(vec) - 1]) coords[idx] + abs(vec[idx]) / 2 // relative center of the segment
 ];
 
+// https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Add_all_values_in_a_list
+function sumAbs(vec, i = 0, r = 0) = i < len(vec) ? sumAbs(vec, i + 1, r + abs(vec[i])) : r;
 
 
 
 module labels() {
     text2d(top, is_opposite = false, is_vertical = false);
-    text2d(right, is_opposite = true, is_vertical = true);
     text2d(bottom, is_opposite = true, is_vertical = false);
     text2d(left, is_opposite = false, is_vertical = true);
+    text2d(right, is_opposite = true, is_vertical = true);
 }
 
 
@@ -147,7 +133,3 @@ difference() {
             labels();
 
 }
-
-// https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Add_all_values_in_a_list
-function sumAbs(vec, i = 0, r = 0) = i < len(vec) ? sumAbs(vec, i + 1, r + abs(vec[i])) : r;
-
