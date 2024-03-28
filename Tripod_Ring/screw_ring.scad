@@ -1,7 +1,7 @@
 // https://github.com/adrianschlatter/threadlib?tab=readme-ov-file#installation
 use <threadlib/threadlib.scad>
 
-ring_thickness = 5.68;
+ring_thickness = 5;
 ring_inner_diameter = 14;
 
 ring_inner_radius = ring_inner_diameter / 2;
@@ -9,9 +9,14 @@ extrusion_circle_radius = ring_thickness / 2;
 ring_outer_radius = ring_inner_radius + extrusion_circle_radius;
 
 module ring() {
+    fn = 6;
+    // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/undersized_circular_objects
+    fudge = 1/cos(180/fn);
+    
     rotate_extrude($fn = 100)
     translate([ring_outer_radius, 0, 0])
-    circle(r = extrusion_circle_radius, $fn = 6);
+    circle(r = extrusion_circle_radius * fudge, $fn = fn);
+    
 }
 
 module screw_cilinder(turns = 5, extra_length = 2) {
@@ -30,21 +35,30 @@ module screw_cilinder(turns = 5, extra_length = 2) {
     };
 };
 
-translate([0, 0, ring_thickness/2 - 0.4])
-difference()
-{
+module model()
+    color("red")
     union() {
         translate([0, extrusion_circle_radius + ring_outer_radius, 0])
         ring();
-        
+
         rotate ([90, 0, 0])
         translate([0, 0, -1])
         screw_cilinder();
     }
 
-    translate([0, 10, -7.45])
-        cube([40, 40, 10], center = true);
+translate([0, 0, -ring_thickness/2])
+difference()
+{
+    model();
+    
+    // See also
+    // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Tips_and_Tricks#Computing_a_bounding_box
+    translate([0, 0, ring_thickness / 2])
+        linear_extrude(height=1)
+            projection(cut=false)
+                model();
 }
+
 // References:
 // Test screw excessive length = 5.4 - 4.1 = 1.3mm
 // Test screw total stem length = 9.2mm
