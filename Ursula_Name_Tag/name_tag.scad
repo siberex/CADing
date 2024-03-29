@@ -1,10 +1,9 @@
-$fa=1;
-$fs=1;
-$fn=64;
+$fa = 1; $fs = 1;
+$fn = $preview ? 32 : 64;
 
+// Configurable >>>
 line1 = "Sib.Li";
 line2 = "+1 234 567-8900";
-
 
 scale_factor = 2.75;
 base_width = scale_factor * 21; // approx. tag width
@@ -14,10 +13,10 @@ base_thickness = 1.2; // set this to how thick you want the tag
 font_face = "Fira Sans Condensed:style=SemiBold";
 font_size = scale_factor * 1.7;
 font_thickness = 0.6;
-
-
-
 ear_thickness = 2.8;
+// <<< End of configurable
+
+
 ear_hole_corner_radius = 3;
 ear_offset = 4; // should be more than ear_hole_corner_radius
 ear_relaive_height = base_height + 1;
@@ -61,15 +60,21 @@ module textline(line, y_pos, length) {
         linear_extrude(height = font_thickness)
             //// ↓ Uncomment to auto-size text lines ↓ ////
             //resize([fit_length, 0], auto = true)
-                text(line, size=font_size, font = str(font_face), $fn = 60, halign="center", spacing = 1);
+                text(
+                    line, 
+                    size = font_size, font = str(font_face),
+                    halign = "center", 
+                    valign = "center",
+                    spacing = 1
+                );
 }
 
 
 module model() {
     union() {
-        textline(line1, 1.4, base_width); 
-        textline(line2, -5.6, base_width);
-        base(base_width, 15);
+        textline(line1, base_height / 4, base_width); 
+        textline(line2, -base_height / 4, base_width);
+        base(base_width, base_height);
     }
 }
 model();
