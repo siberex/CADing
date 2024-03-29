@@ -3,16 +3,16 @@ $fn = $preview ? 32 : 64;
 
 // icon, text, icon_offset
 lines = [
-    ["user-tie", "Stephen Jingle"],
+    ["user-tie", "Stephen Jingle", 0.0625],
     ["telegram", "@sibli", -0.125],
     ["whatsapp", "+1-234-567-8900"],
     ["georgia", "995-000-12-3456"],
-    ["instagram", "@sib_li",  -0.125],
+    ["instagram", "@sib_li", -0.0625],
     ["earth", "sib.li"],
 ];
 
 
-base_width = 45;
+base_width = 48;
 base_height = 30;
 base_thickness = 0.8;
 offset_radius = 5;
@@ -22,7 +22,7 @@ font_size = 4;
 //font_face = "Jetbrains Mono:style=Medium";
 //font_spacing = 0.94;
 font_face = "Ubuntu:style=Medium";
-font_spacing = 1;
+font_spacing = 1.1;
 
 
 module base_plate(width, height) {
@@ -76,11 +76,21 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
 }
 
 
-module punch_hole() {
-    
-    
+module punch_hole(x, y) {
+    rect = [4, 1];
+    translate([x, y, 0])
+        linear_extrude(font_thickness)
+            difference() {
+                offset(r = 2) {
+                    square(rect, center = true);
+                }
+                offset(r = 0) {
+                    square(rect, center = true);
+                }
+            }
+            
 }
-
+punch_hole(0, 0);
 
 function get_icon(v) = str("icons/", v[0], ".svg");
 function get_text(v) = str(v[1]);
@@ -102,8 +112,8 @@ module print_lines(x, y) {
 
 module model() {
     union() {
-        print_lines(-base_width / 2, base_height / 2 - 2);
-        base_plate(base_width, base_height);
+        print_lines(-base_width / 2 + 0.1, base_height / 2 - 2.2);
+        %base_plate(base_width, base_height);
     }
     
 }
