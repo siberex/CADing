@@ -1,5 +1,9 @@
+$fa = 1; $fs = 1;
+$fn = $preview ? 32 : 64;
+
 // https://github.com/openscad/scad-utils
 use <scad-utils/lists.scad>
+use <./fonts/Poppins-Medium.ttf>
 
 // Ruler sides definition
 // Left to right, top to bottom (NOT clockwise or counterclockwise)

@@ -1,3 +1,6 @@
+$fa = 1; $fs = 1;
+$fn = $preview ? 32 : 64;
+
 // https://github.com/adrianschlatter/threadlib?tab=readme-ov-file#installation
 use <threadlib/threadlib.scad>
 

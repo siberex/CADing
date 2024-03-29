@@ -1,6 +1,8 @@
 $fa = 1; $fs = 1;
 $fn = $preview ? 32 : 64;
 
+use <./fonts/Ubuntu-Medium.ttf>
+
 // icon, text, icon_offset
 $lines = [
     ["user-tie", "Stephen Jingle", 0.0625],
