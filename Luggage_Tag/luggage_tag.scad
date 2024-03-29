@@ -107,7 +107,7 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
 module punch_hole(x = 0, y = 0) {
     rect = [4, 0.001];
     translate([x, y, -0.001])
-        linear_extrude(base_thickness + (is_embossed ? emboss_thickness : 0))
+        linear_extrude(base_thickness + (is_embossed ? emboss_thickness : 0) + 0.01)
             offset(r = 2 - punch_rim) {
                 square(rect, center = true);
             }
