@@ -14,7 +14,7 @@ $lines = [
 ];
 include <./.data.scad>;
 
-is_embossed = false; // false = make debossed
+is_embossed = true; // false = make debossed
 bevel_thickness = 0.4;
 
 base_width = 48;
@@ -30,18 +30,20 @@ font_spacing = 1.1;
 punch_rim = 0.6;
 
 
-module base_plate(width, height) {
+module base_plate(width, height, hide_base = false) {
     rect = [width, height];
     
     union() {
-        linear_extrude(base_thickness)    
-            offset(r = offset_radius) {
-                square(rect, center = true);
-            }
-
+        if (!hide_base) {
+            linear_extrude(base_thickness)    
+                offset(r = offset_radius) {
+                    square(rect, center = true);
+                }
+        }
+        
         // Rim
         color("green")
-        translate([0, 0, base_thickness])
+        translate([0, 0, base_thickness - (is_embossed ? 0 : bevel_thickness)])
             linear_extrude(bevel_thickness)
                 difference() {
                     offset(r = offset_radius) {
@@ -131,12 +133,12 @@ module card(hide_base = false) {
 
     if (is_embossed) {
         union() {
-            if (!hide_base) base_plate(base_width, base_height);
+            base_plate(base_width, base_height, hide_base);
             print_lines(x = -base_width / 2 + text_pad_left, y = base_height / 2 + text_pad_top);
         }
     } else {
         difference() {
-            if (!hide_base) %base_plate(base_width, base_height);
+            base_plate(base_width, base_height, hide_base);
             translate([0, 0, -bevel_thickness])
                 %print_lines(x = -base_width / 2 + text_pad_left, y = base_height / 2 + text_pad_top);
         }
