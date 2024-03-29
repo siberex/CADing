@@ -2,30 +2,33 @@ $fa=1;
 $fs=1;
 $fn=64;
 
-line1 = "+1 234 567-8900";
-line2 = "+9 876 543-2156";
+line1 = "Sib.Li";
+line2 = "+1 234 567-8900";
 
-LengthFactor = 2.75; // increase this for longer names
 
-base_height = 1.2; //set this to how thick you want the tag
+scale_factor = 2.75;
+base_width = scale_factor * 21; // approx. tag width
+base_height = scale_factor * 5.45; // height of the bone middle part
+base_thickness = 1.2; // set this to how thick you want the tag
 //font_face = "Roboto Condensed:style=Bold";
 font_face = "Fira Sans Condensed:style=SemiBold";
-font_size = 4.7;
+font_size = scale_factor * 1.7;
 font_thickness = 0.6;
 
 
-ear_hole_corner_radius = 3;
-ear_width = 4;
-ear_height = 16;
+
 ear_thickness = 2.8;
+ear_hole_corner_radius = 3;
+ear_offset = 4; // should be more than ear_hole_corner_radius
+ear_relaive_height = base_height + 1;
 
 
 module ear(x = 0, y = 0) {
-    rect = [ear_width - ear_hole_corner_radius, ear_height - ear_hole_corner_radius];
+    rect = [ear_offset - ear_hole_corner_radius, ear_relaive_height - ear_hole_corner_radius];
     //#color("red") translate([x / 2, y, 0]) square(rect, center = true);
     
     translate([x / 2, y, 0])
-        linear_extrude(base_height)
+        linear_extrude(base_thickness)
             difference() {
                 offset(r = ear_hole_corner_radius + ear_thickness) {
                     square(rect, center = true);
@@ -37,29 +40,36 @@ module ear(x = 0, y = 0) {
 }
 
 module base(width, height) {
-    dx = width - ear_width;
-    ear_dx = ear_width + ear_thickness;
-
+    dx = width - ear_offset;
+    ear_dx = ear_offset + ear_thickness;
+    
     union() {
-        translate([0, 0, base_height / 2])
-            cube([width - ear_dx * 2, height, base_height], center = true);        
+        translate([0, 0, base_thickness / 2])
+            cube([width - ear_dx * 2, height, base_thickness], center = true);        
         ear(dx);
         ear(-dx);
     }
 };
 
-module textline(line, size, y_pos) {
-    translate([0, y_pos, base_height])
+module textline(line, y_pos, length) {
+    ear_dx = ear_offset + ear_thickness;
+    text_padding = 0;
+    fit_length = length - ear_dx * 2 - ear_hole_corner_radius - text_padding * 2;
+    
+    color("gray")
+    translate([0, y_pos, base_thickness])
         linear_extrude(height = font_thickness)
-            text(line, size, font = str(font_face), $fn = 16, halign="center", spacing = 1);
+            //// ↓ Uncomment to auto-size text lines ↓ ////
+            //resize([fit_length, 0], auto = true)
+                text(line, size=font_size, font = str(font_face), $fn = 60, halign="center", spacing = 1);
 }
 
 
 module model() {
     union() {
-        textline(line1, font_size, 1.4); 
-        textline(line2, font_size, -5.6);
-        base(LengthFactor * 21, 15);
+        textline(line1, 1.4, base_width); 
+        textline(line2, -5.6, base_width);
+        base(base_width, 15);
     }
 }
 model();
