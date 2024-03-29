@@ -1,15 +1,19 @@
-$fn=64;
+$fa = 1; $fs = 1;
+$fn = $preview ? 32 : 64;
 
-line1 = "";
-line2 = "";
-line3 = "";
-line4 = "";
-line5 = "";
-line6 = "";
+// icon, text, icon_offset
+lines = [
+    ["user-tie", "Stephen Jingle"],
+    ["telegram", "@sibli", -0.125],
+    ["whatsapp", "+1-234-567-8900"],
+    ["georgia", "995-000-12-3456"],
+    ["instagram", "@sib_li",  -0.125],
+    ["earth", "sib.li"],
+];
 
 
-base_width = 60;
-base_height = 55;
+base_width = 45;
+base_height = 30;
 base_thickness = 0.8;
 offset_radius = 5;
 
@@ -58,7 +62,7 @@ module textline(line = "", x_pos = 0, y_pos = 0, fit_length = 0) {
                 );
 }
 
-module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, fit_length = 0, icon_offset_y = 0) {
+module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_offset_y = 0) {
     w = font_size;
     h = font_size;
     
@@ -68,20 +72,37 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, fit_l
             resize([w, 0], auto = true)
                 import(icon, center = true, dpi = 2400);
     
-    textline(line, x_pos + 4, y_pos, fit_length);
+    textline(line, x_pos + 4, y_pos);
+}
+
+
+module punch_hole() {
+    
+    
+}
+
+
+function get_icon(v) = str("icons/", v[0], ".svg");
+function get_text(v) = str(v[1]);
+function get_icon_offset(v) = len(v) > 2 ? v[2] : 0;
+
+module print_lines(x, y) {
+    for (idx = [0 : len(lines) - 1]) {
+        
+        texticon(
+            get_icon(lines[idx]), 
+            get_text(lines[idx]),
+            x,
+            y - idx * (font_size + 1.9),
+            get_icon_offset(lines[idx])
+        );
+    }
 }
 
 
 module model() {
     union() {
-        
-        texticon("icons/user-tie.svg", "Stephen Jingle", -base_width/2, 25, 0);
-        texticon("icons/telegram.svg", "@sibli", -base_width/2, 17, 0, -0.125);
-        texticon("icons/whatsapp.svg", "+1-234-567-8900", -base_width/2, 9, 0);
-        texticon("icons/georgia.svg", "995-000-12-3456", -base_width/2, 1, 0);
-        texticon("icons/instagram.svg", "@sib_li", -base_width/2, -7, 0, -0.125);
-        texticon("icons/earth.svg", "sib.li", -base_width/2, -15, 0);
-        
+        print_lines(-base_width / 2, base_height / 2 - 2);
         base_plate(base_width, base_height);
     }
     
