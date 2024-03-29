@@ -2,7 +2,7 @@ $fa = 1; $fs = 1;
 $fn = $preview ? 32 : 64;
 
 // icon, text, icon_offset
-lines = [
+$lines = [
     ["user-tie", "Stephen Jingle", 0.0625],
     ["telegram", "@sibli", -0.125],
     ["whatsapp", "+1-234-567-8900"],
@@ -10,7 +10,7 @@ lines = [
     ["instagram", "@sib_li", -0.0625],
     ["earth", "sib.li"],
 ];
-
+include <./.data.scad>;
 
 base_width = 48;
 base_height = 30;
@@ -77,17 +77,17 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
 }
 
 
-module punch_hole(x, y) {    
-    rect = [4, 0.001];
-    translate([x, y, -0.001])
+module punch_hole(x = 0, y = 0) {    
+    rect = [4, 0.01];
+    translate([x, y, -0.01])
         linear_extrude(base_thickness + font_thickness)
             offset(r = 2 - 0.6) {
                 square(rect, center = true);
             }
 }
 
-module punch_hole_bevel(x, y) {
-    rect = [4, 0.001];
+module punch_hole_bevel(x = 0, y = 0) {
+    rect = [4, 0.01];
     
     color("green")
     translate([x, y, 0])
@@ -107,7 +107,7 @@ function get_icon(v) = str("icons/", v[0], ".svg");
 function get_text(v) = str(v[1]);
 function get_icon_offset(v) = len(v) > 2 ? v[2] : 0;
 
-module print_lines(x, y) {
+module print_lines(lines = $lines, x = 0, y = 0) {
     for (idx = [0 : len(lines) - 1]) {
         
         texticon(
@@ -124,7 +124,7 @@ module print_lines(x, y) {
 module model() {
     difference() {
         union() {
-            print_lines(-base_width / 2 + 0.1, base_height / 2 - 2.2);        
+            print_lines(x = -base_width / 2 + 0.1, y = base_height / 2 - 2.2);        
             base_plate(base_width, base_height);
             punch_hole_bevel(base_width / 2 - 2, -base_height / 2);
         };
