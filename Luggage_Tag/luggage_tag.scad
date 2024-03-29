@@ -14,12 +14,14 @@ $lines = [
 ];
 include <./.data.scad>;
 
-is_embossed = true; // false = make debossed
-bevel_thickness = 0.4;
+is_embossed = false; // false = make debossed
+add_rim = true;
+hide_base = false;
+emboss_thickness = 0.4;
 
 base_width = 48;
 base_height = 30;
-base_thickness = is_embossed ? 0.8 : 0.8 + bevel_thickness;
+base_thickness = is_embossed ? 0.8 : 0.8 + emboss_thickness;
 offset_radius = 5;
 
 font_size = 4;
@@ -29,37 +31,55 @@ font_face = "Ubuntu:style=Medium";
 font_spacing = 1.1;
 punch_rim = 0.6;
 
+hole_x = base_width / 2 - 2;
+hole_y = -base_height / 2;
 
-module base_plate(width, height, hide_base = false) {
-    rect = [width, height];
-    
-    union() {
-        if (!hide_base) {
-            linear_extrude(base_thickness)    
+
+module base_card(rect = [60, 30]) {
+    linear_extrude(base_thickness)    
+        offset(r = offset_radius) {
+            square(rect, center = true);
+        }
+}
+
+module rim(rect = [60, 30]) {
+    color("green")
+    translate([0, 0, base_thickness - (is_embossed ? 0 : emboss_thickness)])
+        linear_extrude(emboss_thickness)
+            difference() {
                 offset(r = offset_radius) {
                     square(rect, center = true);
-                }
+                };
+                offset(r = offset_radius - 1) {
+                    square(rect, center = true);
+                };
+            }
+}
+
+module base_plate(width, height) {
+    rect = [width, height];
+
+    if (is_embossed) {
+        union() {
+            if (!hide_base) base_card(rect);
+            punch_hole_bevel(hole_x, hole_y);
+            if (add_rim) rim(rect);
         }
-        
-        // Rim
-        color("green")
-        translate([0, 0, base_thickness - (is_embossed ? 0 : bevel_thickness)])
-            linear_extrude(bevel_thickness)
-                difference() {
-                    offset(r = offset_radius) {
-                        square(rect, center = true);
-                    };
-                    offset(r = offset_radius - 1) {
-                        square(rect, center = true);
-                    };
-                }
+    } else {
+        difference() {
+            if (!hide_base) base_card(rect); // else %base_card(rect);
+            union() {
+                if (add_rim) rim(rect);
+                punch_hole_bevel(hole_x, hole_y);
+            }
+        }
     }
 };
 
 module textline(line = "", x_pos = 0, y_pos = 0, fit_length = 0) {
     color("gray")
     translate([x_pos, y_pos, base_thickness])
-        linear_extrude(height = bevel_thickness)
+        linear_extrude(height = emboss_thickness)
             resize([fit_length, 0], auto = true)
                 text(
                     line, size=font_size,
@@ -76,7 +96,7 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
     
     color("green")
     translate([x_pos, y_pos + h/2 + icon_offset_y * h, base_thickness])
-        linear_extrude(height = bevel_thickness)
+        linear_extrude(height = emboss_thickness)
             resize([w, 0], auto = true)
                 import(icon, center = true);
     
@@ -84,10 +104,10 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
 }
 
 
-module punch_hole(x = 0, y = 0) {    
+module punch_hole(x = 0, y = 0) {
     rect = [4, 0.01];
     translate([x, y, -0.01])
-        linear_extrude(base_thickness + (is_embossed ? bevel_thickness : 0))
+        linear_extrude(base_thickness + (is_embossed ? emboss_thickness : 0))
             offset(r = 2 - punch_rim) {
                 square(rect, center = true);
             }
@@ -97,8 +117,8 @@ module punch_hole_bevel(x = 0, y = 0) {
     rect = [4, 0.01];
     
     color("green")
-    translate([x, y, 0])
-        linear_extrude(base_thickness + (is_embossed ? bevel_thickness : 0))
+    translate([x, y, base_thickness - (!is_embossed ? emboss_thickness : 0)])
+        linear_extrude(emboss_thickness)
             difference() {
                 offset(r = 2) {
                     square(rect, center = true);
@@ -127,20 +147,20 @@ module print_lines(lines = $lines, x = 0, y = 0) {
     }
 }
 
-module card(hide_base = false) {
+module badge() {
     text_pad_left = 0.1;
     text_pad_top = -2.2;
 
     if (is_embossed) {
         union() {
-            base_plate(base_width, base_height, hide_base);
+            base_plate(base_width, base_height);
             print_lines(x = -base_width / 2 + text_pad_left, y = base_height / 2 + text_pad_top);
         }
     } else {
         difference() {
-            base_plate(base_width, base_height, hide_base);
-            translate([0, 0, -bevel_thickness])
-                %print_lines(x = -base_width / 2 + text_pad_left, y = base_height / 2 + text_pad_top);
+            base_plate(base_width, base_height);
+            translate([0, 0, -emboss_thickness])
+                print_lines(x = -base_width / 2 + text_pad_left, y = base_height / 2 + text_pad_top);
         }
     }
 
@@ -148,11 +168,8 @@ module card(hide_base = false) {
 
 module model() {
     difference() {
-        union() {
-            card(hide_base = false);
-            punch_hole_bevel(base_width / 2 - 2, -base_height / 2);
-        };
-        punch_hole(base_width / 2 - 2, -base_height / 2);
+        badge();
+        punch_hole(hole_x, hole_y);
     }
 }
 model();
