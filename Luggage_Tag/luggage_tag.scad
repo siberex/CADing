@@ -21,7 +21,7 @@ emboss_thickness = 0.4;
 
 base_width = 48;
 base_height = 30;
-base_thickness = is_embossed ? 0.8 : 0.8 + emboss_thickness;
+base_thickness = is_embossed ? 0.8 : 0.6 + emboss_thickness;
 offset_radius = 5;
 
 font_size = 4;
@@ -105,8 +105,8 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
 
 
 module punch_hole(x = 0, y = 0) {
-    rect = [4, 0.01];
-    translate([x, y, -0.01])
+    rect = [4, 0.001];
+    translate([x, y, -0.001])
         linear_extrude(base_thickness + (is_embossed ? emboss_thickness : 0))
             offset(r = 2 - punch_rim) {
                 square(rect, center = true);
@@ -114,7 +114,7 @@ module punch_hole(x = 0, y = 0) {
 }
 
 module punch_hole_bevel(x = 0, y = 0) {
-    rect = [4, 0.01];
+    rect = [4, 0.001];
     
     color("green")
     translate([x, y, base_thickness - (!is_embossed ? emboss_thickness : 0)])
@@ -134,7 +134,7 @@ function get_icon(v) = str("icons/", v[0], ".svg");
 function get_text(v) = str(v[1]);
 function get_icon_offset(v) = len(v) > 2 ? v[2] / 100 : 0;
 
-module print_lines(lines = $lines, x = 0, y = 0) {
+module print_lines(x = 0, y = 0, lines = $lines) {
     for (idx = [0 : len(lines) - 1]) {
         
         texticon(
@@ -150,17 +150,28 @@ module print_lines(lines = $lines, x = 0, y = 0) {
 module badge() {
     text_pad_left = 0.1;
     text_pad_top = -2.2;
+    
+    lines_x = -base_width / 2 + text_pad_left;
+    lines_y = base_height / 2 + text_pad_top;
 
     if (is_embossed) {
         union() {
             base_plate(base_width, base_height);
-            print_lines(x = -base_width / 2 + text_pad_left, y = base_height / 2 + text_pad_top);
+            print_lines(lines_x, lines_y);
         }
     } else {
-        difference() {
-            base_plate(base_width, base_height);
-            translate([0, 0, -emboss_thickness])
-                print_lines(x = -base_width / 2 + text_pad_left, y = base_height / 2 + text_pad_top);
+        if (hide_base) {
+            union() {
+                base_plate(base_width, base_height);
+                translate([0, 0, -emboss_thickness + 0.001])
+                    print_lines(lines_x, lines_y);
+            }
+        } else {
+            difference() {
+                base_plate(base_width, base_height);
+                translate([0, 0, -emboss_thickness + 0.001])
+                    print_lines(lines_x, lines_y);
+            }
         }
     }
 
