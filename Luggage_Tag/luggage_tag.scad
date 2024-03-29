@@ -34,16 +34,17 @@ module base_plate(width, height) {
                 square(rect, center = true);
             }
 
+        // Rim
         color("green")
         translate([0, 0, base_thickness])
             linear_extrude(font_thickness)
                 difference() {
                     offset(r = offset_radius) {
                         square(rect, center = true);
-                    }
+                    };
                     offset(r = offset_radius - 1) {
                         square(rect, center = true);
-                    }
+                    };
                 }
     }
 };
@@ -76,21 +77,31 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
 }
 
 
-module punch_hole(x, y) {
-    rect = [4, 1];
+module punch_hole(x, y) {    
+    rect = [4, 0.001];
+    translate([x, y, -0.001])
+        linear_extrude(base_thickness + font_thickness)
+            offset(r = 2 - 0.6) {
+                square(rect, center = true);
+            }
+}
+
+module punch_hole_bevel(x, y) {
+    rect = [4, 0.001];
+    
+    color("green")
     translate([x, y, 0])
-        linear_extrude(font_thickness)
+        linear_extrude(base_thickness + font_thickness)
             difference() {
                 offset(r = 2) {
                     square(rect, center = true);
-                }
-                offset(r = 0) {
+                };
+                offset(r = 2 - 0.6) {
                     square(rect, center = true);
-                }
+                };
             }
-            
 }
-punch_hole(0, 0);
+
 
 function get_icon(v) = str("icons/", v[0], ".svg");
 function get_text(v) = str(v[1]);
@@ -111,10 +122,13 @@ module print_lines(x, y) {
 
 
 module model() {
-    union() {
-        print_lines(-base_width / 2 + 0.1, base_height / 2 - 2.2);
-        %base_plate(base_width, base_height);
+    difference() {
+        union() {
+            print_lines(-base_width / 2 + 0.1, base_height / 2 - 2.2);        
+            base_plate(base_width, base_height);
+            punch_hole_bevel(base_width / 2 - 2, -base_height / 2);
+        };
+        punch_hole(base_width / 2 - 2, -base_height / 2);
     }
-    
 }
 model();
