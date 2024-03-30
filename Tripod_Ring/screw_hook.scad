@@ -22,7 +22,7 @@ module ring() {
             circle(r = extrusion_circle_radius * fudge, $fn = fn);
 }
 
-module screw_cilinder(turns = 5, extra_length = 2) {
+module screw_cilinder(turns = 5, extra_length = 2.5) {
     // Tripod screw, 1/4-20 UNC
     profile = "UNC-1/4-ext";    
     specs = thread_specs(profile);
@@ -31,9 +31,9 @@ module screw_cilinder(turns = 5, extra_length = 2) {
     union() {
         P = specs[0];
         Dsupport = specs[2];
-        H = (turns + 1) * P + extra_length;
+        H = (turns + 1) * P + extra_length + 0.5;
         thread(profile, turns=turns, higbee_arc=50);
-        translate([0, 0, -P / 2 - extra_length])
+        translate([0, 0, -P / 2 - extra_length - 0.5])
             cylinder(h=H, d=Dsupport);
     };
 }
