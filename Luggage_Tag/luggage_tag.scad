@@ -1,11 +1,11 @@
-$fa = 0.1; $fs = 0.1;
+$fa = 1; $fs = 1;
 $fn = $preview ? 32 : 64;
 
 use <./fonts/Ubuntu-Medium.ttf>
 
 // line index, icon file, text, icon_offset %height, dx_offset mm
 $lines = [
-    [0, "user-tie", "Stephen Jingle", 4],
+    [0, "user", "Stephen Jingle", 4],
     [1, "telegram", "sibli", -12.5],
     [1, "instagram", "sib_li", -6.25, 28],
     [2, "whatsapp", "+1-234-567-8900"],
@@ -14,15 +14,18 @@ $lines = [
 ];
 include <./.data.scad>;
 
-is_embossed = false; // false = make debossed
+is_embossed = true; // false = make debossed
 add_rim = true;
-hide_base = true;
-emboss_thickness = 0.2; // 2 * nossle size is recommended
+hide_base = false;
+emboss_thickness = is_embossed ? 0.2 : 0.1; // 1 * step size is recommended
+base_thickness = is_embossed ? 0.8 : 0.7 + emboss_thickness;
 
+// Actual width will be 10mm larger (offset rounded corners, +2 * offset_radius)
 base_width = 50;
+// Actual height will be 10mm larger (+2 * offset_radius)
 base_height = 30; // 28.2
-base_thickness = is_embossed ? 0.8 : 0.6 + emboss_thickness;
 offset_radius = 5;
+rim_thikness = 1;
 
 font_size = 4.6;
 //font_face = "Jetbrains Mono:style=Medium";
@@ -30,15 +33,19 @@ font_size = 4.6;
 font_face = "Ubuntu:style=Medium";
 font_leading = 1.57; // 1.475;
 font_spacing = 1;
-punch_rim = 0.4;
 
-hole_x = base_width / 2 - 3.2;
+punch_hole_geometry = [6.2, 1.4];
+punch_rim = 0.6;
+
+hole_x = base_width / 2 - 2.8;
 hole_y = -base_height / 2 + 0.4;
 
 text_pad_left = 0.3;
 text_pad_top = -0.6 * font_size;
 
 total_height = base_thickness + (is_embossed ? emboss_thickness : 0);
+
+export_svg_projection = false;
 
 
 module base_card(rect = [60, 30]) {
@@ -49,14 +56,17 @@ module base_card(rect = [60, 30]) {
 }
 
 module rim(rect = [60, 30]) {
+    extrude = is_embossed ? emboss_thickness : base_thickness;    
+    tz = is_embossed ? -base_thickness : 0;
+    
     color("green")
-    translate([0, 0, base_thickness - (is_embossed ? 0 : emboss_thickness)])
-        linear_extrude(emboss_thickness)
+    translate([0, 0, -tz])
+        linear_extrude(extrude)
             difference() {
                 offset(r = offset_radius) {
                     square(rect, center = true);
                 };
-                offset(r = offset_radius - 1) {
+                offset(r = offset_radius - rim_thikness) {
                     square(rect, center = true);
                 };
             }
@@ -111,26 +121,28 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
 
 
 module punch_hole(x = 0, y = 0) {
-    rect = [6, 1];
+    extrude = base_thickness + (is_embossed ? emboss_thickness : 0) + 0.01;
+
     translate([x, y, -0.001])
-        linear_extrude(base_thickness + (is_embossed ? emboss_thickness : 0) + 0.01)
+        linear_extrude(extrude)
             offset(r = 2 - punch_rim) {
-                square(rect, center = true);
+                square(punch_hole_geometry, center = true);
             }
 }
 
 module punch_hole_bevel(x = 0, y = 0) {
-    rect = [6, 1];
-    
+    extrude = is_embossed ? emboss_thickness : base_thickness;
+    tz = is_embossed ? base_thickness : 0;
+
     color("green")
-    translate([x, y, base_thickness - (!is_embossed ? emboss_thickness : 0)])
-        linear_extrude(emboss_thickness)
+    translate([x, y, tz])
+        linear_extrude(extrude)
             difference() {
                 offset(r = 2) {
-                    square(rect, center = true);
+                    square(punch_hole_geometry, center = true);
                 };
                 offset(r = 2 - punch_rim) {
-                    square(rect, center = true);
+                    square(punch_hole_geometry, center = true);
                 };
             }
 }
@@ -189,6 +201,18 @@ module model() {
     }
 }
 
-translate([0, 0, total_height])
-    rotate([0, 180, 0])
-        model();
+if (is_embossed) {
+    model();
+} else {
+    if (export_svg_projection) {
+        // Projection to export SVG
+        // Could be extremely slow to render
+        projection(cut=true) translate([0, 0, - total_height + emboss_thickness/2])
+            model();
+    } else {
+        // Rotate to print upside down (letters first layer), use only with is_embossed = false
+        // Useful when printing on a flat surface table
+        translate([0, 0, total_height]) rotate([0, 180, 0])
+            model();
+    }
+}
