@@ -1,38 +1,43 @@
 $fa = 0.1; $fs = 0.1;
-$fn = $preview ? 32 : 128;
+$fn = $preview ? 32 : 32;
 
 use <./fonts/Ubuntu-Medium.ttf>
 
-// icon, text, icon_offset %height
+// line index, icon file, text, icon_offset %height, dx_offset mm
 $lines = [
-    ["user-tie", "Stephen Jingle", 6.25],
-    ["telegram", "@sibli", -12.5],
-    ["whatsapp", "+1-234-567-8900"],
-    ["georgia", "995-000-12-3456"],
-    ["instagram", "@sib_li", -6.25],
-    ["earth", "sib.li"],
+    [0, "user-tie", "Stephen Jingle", 4],
+    [1, "telegram", "@sibli", -12.5],
+    [1, "instagram", "@sib_li", -6.25, 27],
+    [2, "whatsapp", "+1-234-567-8900"],
+    [3, "phone", "+9-000-12-3456"],
+    [4, "pointer", "sib.li"],
 ];
 include <./.data.scad>;
 
-is_embossed = false; // false = make debossed
+is_embossed = true; // false = make debossed
 add_rim = true;
 hide_base = false;
-emboss_thickness = 0.4;
+emboss_thickness = 0.2; // 2 * nossle size is recommended
 
-base_width = 48;
-base_height = 30;
+base_width = 50;
+base_height = 28;
 base_thickness = is_embossed ? 0.8 : 0.6 + emboss_thickness;
 offset_radius = 5;
 
-font_size = 4;
+font_size = 4.6;
 //font_face = "Jetbrains Mono:style=Medium";
 //font_spacing = 0.94;
 font_face = "Ubuntu:style=Medium";
-font_spacing = 1.1;
+font_spacing = 1;
 punch_rim = 0.6;
 
 hole_x = base_width / 2 - 2;
 hole_y = -base_height / 2;
+
+text_pad_left = 0;
+text_pad_top = -0.55 * font_size;
+
+total_height = base_thickness + (is_embossed ? emboss_thickness : 0);
 
 
 module base_card(rect = [60, 30]) {
@@ -100,7 +105,7 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
             resize([w, 0], auto = true)
                 import(icon, center = true);
     
-    textline(line, x_pos + 4, y_pos);
+    textline(line, x_pos + font_size * 0.7, y_pos);
 }
 
 
@@ -129,28 +134,27 @@ module punch_hole_bevel(x = 0, y = 0) {
             }
 }
 
-
-function get_icon(v) = str("icons/", v[0], ".svg");
-function get_text(v) = str(v[1]);
-function get_icon_offset(v) = len(v) > 2 ? v[2] / 100 : 0;
+function get_line_no(v) = v[0];
+function get_icon(v) = str("icons/", v[1], ".svg");
+function get_text(v) = str(v[2]);
+function get_icon_offset(v) = len(v) > 3 ? v[3] / 100 : 0;
+function get_dx_offset(v) = len(v) > 4 ? v[4] : 0;
 
 module print_lines(x = 0, y = 0, lines = $lines) {
     for (idx = [0 : len(lines) - 1]) {
+        line_no = get_line_no(lines[idx]);
         
         texticon(
             get_icon(lines[idx]), 
             get_text(lines[idx]),
-            x,
-            y - idx * (font_size + 1.9),
+            x + get_dx_offset(lines[idx]),
+            y - line_no * (font_size * 1.475),
             get_icon_offset(lines[idx])
         );
     }
 }
 
 module badge() {
-    text_pad_left = 0.1;
-    text_pad_top = -2.2;
-    
     lines_x = -base_width / 2 + text_pad_left;
     lines_y = base_height / 2 + text_pad_top;
 
@@ -183,4 +187,7 @@ module model() {
         punch_hole(hole_x, hole_y);
     }
 }
+
+//translate([0, 0, total_height])
+//rotate([0, 180, 0])
 model();
