@@ -14,11 +14,13 @@ $lines = [
 ];
 include <./.data.scad>;
 
-is_embossed = true; // false = make debossed
+is_embossed = false; // false = make debossed
 add_rim = true;
 hide_base = false;
-emboss_thickness = is_embossed ? 0.2 : 0.1; // 1 * step size is recommended
-base_thickness = is_embossed ? 0.8 : 0.7 + emboss_thickness;
+// Embossed: 2 * step size is recommended
+// Debossed: Equal to the first layer sise is recommended
+emboss_thickness = is_embossed ? 0.2 : 0.15;
+base_thickness = is_embossed ? 0.8 : 0.9 + emboss_thickness;
 
 // Actual width will be 10mm larger (offset rounded corners, +2 * offset_radius)
 base_width = 50;
@@ -37,8 +39,8 @@ font_spacing = 1;
 punch_hole_geometry = [6.2, 1.4];
 punch_rim = 0.6;
 
-hole_x = base_width / 2 - 2.8;
-hole_y = -base_height / 2 + 0.4;
+hole_x = base_width / 2 - 2.9;
+hole_y = -base_height / 2 + 0.5;
 
 text_pad_left = 0.3;
 text_pad_top = -0.6 * font_size;
