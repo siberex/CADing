@@ -36,6 +36,8 @@ HDT: 80°C.
 
 Good chemical resistance and durability, Could be used for mechanical parts.
 
+More flexible than PLA for the same thickness.
+
 No shrinkage.
 
 Non-toxic.

@@ -18,6 +18,7 @@ Recommended material: TPU 60D
 
 Use any two contrast colors (dividing by base height).
 
+Nozzle 0.4mm, step size 0.2mm works fine for the configured font (`Fira Sans Condensed` >= 4.7mm size).
 
 # Acknowledgements
 

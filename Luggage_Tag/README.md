@@ -1,11 +1,21 @@
 # Luggage Tag
 
-Small badge with my contact info to put in luggage bags and backpacks
+Small badge with your contact info to put in luggage bags and backpacks.
 
 # Recommended parameters
 
-Recommended material: PLA
+- Material: PLA (may be PETG, need to test)
 
-Recommended nozzle size: 0.1mm
+- Step size: 0.1mm
 
-Recommended `emboss_thickness` parameter is 0.1 (1 × nozzle size).
+- Nozzle size: 0.2mm
+
+- `emboss_thickness` parameter: For debossed variant recommended 0.1 (1 × step size).
+
+    For embossed use 2 to 4 × step size.
+
+Debossed variant should be printed on a flat surface table face down.
+
+! Use outer brim of at least 5mm.
+
+Otherwise PLA will bend at that thickness and peel off of the table.

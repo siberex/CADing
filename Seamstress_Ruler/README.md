@@ -13,8 +13,9 @@ Recommended material: PETG or PLA.
 
 Transparent PETG for base with black PETG for letters are optimal.
 
-Recommended `letter_height` parameter is 0.2 for 0.2mm nozzle (1 × nozzle size).
+Recommended `letter_height` parameter is 0.2 or 0.4mm (1 × nozzle size).
 
+Recommended step size 0.2mm.
 
 # Prerequisites
 

@@ -12,13 +12,15 @@ Two models are provided: hook and ring (for extra rigidity). Ring could be used 
 
 Materials:
 
-Hook: PLA
+Hook: PLA or stiffer (PETG don’t have enough rigidity for this thickness).
 
-Ring: PLA or PETG
+Ring: PLA or PETG.
 
-Recommended nozzle size: 0.1mm
+Recommended step size: 0.1mm
 
-0.2mm will work too, threading is perfectly usable at 0.2mm resolution.
+Recommended nozzle size: 0.2mm
+
+0.4mm will work too, threading is perfectly usable at 0.4mm vertical resolution.
 
 
 # Prerequisites
