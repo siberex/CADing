@@ -1,26 +1,26 @@
 $fa = 0.1; $fs = 0.1;
-$fn = $preview ? 32 : 32;
+$fn = $preview ? 32 : 64;
 
 use <./fonts/Ubuntu-Medium.ttf>
 
 // line index, icon file, text, icon_offset %height, dx_offset mm
 $lines = [
     [0, "user-tie", "Stephen Jingle", 4],
-    [1, "telegram", "@sibli", -12.5],
-    [1, "instagram", "@sib_li", -6.25, 27],
+    [1, "telegram", "sibli", -12.5],
+    [1, "instagram", "sib_li", -6.25, 28],
     [2, "whatsapp", "+1-234-567-8900"],
-    [3, "phone", "+9-000-12-3456"],
+    [3, "phone", "+9-000-123-4567"],
     [4, "pointer", "sib.li"],
 ];
 include <./.data.scad>;
 
-is_embossed = true; // false = make debossed
+is_embossed = false; // false = make debossed
 add_rim = true;
-hide_base = false;
+hide_base = true;
 emboss_thickness = 0.2; // 2 * nossle size is recommended
 
 base_width = 50;
-base_height = 28;
+base_height = 30; // 28.2
 base_thickness = is_embossed ? 0.8 : 0.6 + emboss_thickness;
 offset_radius = 5;
 
@@ -28,14 +28,15 @@ font_size = 4.6;
 //font_face = "Jetbrains Mono:style=Medium";
 //font_spacing = 0.94;
 font_face = "Ubuntu:style=Medium";
+font_leading = 1.57; // 1.475;
 font_spacing = 1;
-punch_rim = 0.6;
+punch_rim = 0.4;
 
-hole_x = base_width / 2 - 2;
-hole_y = -base_height / 2;
+hole_x = base_width / 2 - 3.2;
+hole_y = -base_height / 2 + 0.4;
 
-text_pad_left = 0;
-text_pad_top = -0.55 * font_size;
+text_pad_left = 0.3;
+text_pad_top = -0.6 * font_size;
 
 total_height = base_thickness + (is_embossed ? emboss_thickness : 0);
 
@@ -110,7 +111,7 @@ module texticon(icon = "icons/phone.svg", line = "", x_pos = 0, y_pos = 0, icon_
 
 
 module punch_hole(x = 0, y = 0) {
-    rect = [4, 0.001];
+    rect = [6, 1];
     translate([x, y, -0.001])
         linear_extrude(base_thickness + (is_embossed ? emboss_thickness : 0) + 0.01)
             offset(r = 2 - punch_rim) {
@@ -119,7 +120,7 @@ module punch_hole(x = 0, y = 0) {
 }
 
 module punch_hole_bevel(x = 0, y = 0) {
-    rect = [4, 0.001];
+    rect = [6, 1];
     
     color("green")
     translate([x, y, base_thickness - (!is_embossed ? emboss_thickness : 0)])
@@ -148,7 +149,7 @@ module print_lines(x = 0, y = 0, lines = $lines) {
             get_icon(lines[idx]), 
             get_text(lines[idx]),
             x + get_dx_offset(lines[idx]),
-            y - line_no * (font_size * 1.475),
+            y - line_no * (font_size * font_leading),
             get_icon_offset(lines[idx])
         );
     }
@@ -188,6 +189,6 @@ module model() {
     }
 }
 
-//translate([0, 0, total_height])
-//rotate([0, 180, 0])
-model();
+translate([0, 0, total_height])
+    rotate([0, 180, 0])
+        model();
