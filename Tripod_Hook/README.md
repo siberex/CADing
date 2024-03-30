@@ -1,4 +1,4 @@
-# Tripod Ring Attachment
+# Tripod Hook 1/4" Attachment
 
 Fixtures to attach to the camera tripods with 1/4" mounts underneath the main column.
 

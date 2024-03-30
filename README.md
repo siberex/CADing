@@ -5,11 +5,11 @@ Umbrella repo for various 3D-printing and CAD-modeling projects
 
 # Contents
 
-- [Tripod_Ring](/Tripod_Ring/) — Small screwing fixture for camera tripod
+- [Tripod_Hook](/Tripod_Hook/) — Small hook fixture for camera tripods, 1/4" attachment screw.
 
-- [Luggage Tag](/Luggage_Tag/) - Small luggage badge with contact details
+- [Luggage Tag](/Luggage_Tag/) - Handy luggage badge with contact details.
 
-- [Ursula_Name_Tag](/Ursula_Name_Tag/) — Pet name tag for the cat
+- [Ursula_Collar_Tag](/Ursula_Collar_Tag/) — Configurable pet collar tag for cats, dogs or your domestic wombat.
 
 - [Seamstress_Ruler](/Seamstress_Ruler/) — Parametrically-customizable seam guide (sewing gauge) for quilting/sewing
 
