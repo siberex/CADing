@@ -18,10 +18,90 @@ Umbrella repo for various 3D-printing and CAD-modeling projects
 
 ## Filament types
 
-- PETG: Polyethylene terephthalate glycol, chemical resistance and durability
+### PLA
 
-- PLA: biodegradable, for quick prototypes that don’t require high mechanical, chemical, or temperature resistance
+HDT: 55°C.
 
-- TPU: Thermoplastic polyurethane, flexible material.
+Biodegradable, non-toxic, for models that **don’t** require high mechanical, chemical, or temperature resistance.
 
-    Brands: Flexfill
+More rigid than PETG for the same thickness.
+
+Degrades under UV (became fragile and crumbly).
+
+High shrinkage - could delaminate.
+
+### PETG (Polyethylene terephthalate glycol)
+
+HDT: 80°C.
+
+Good chemical resistance and durability, Could be used for mechanical parts.
+
+No shrinkage.
+
+Non-toxic.
+
+UV-resistant.
+
+### ABS
+
+HDT: 90°C.
+
+Cheap, easy in post-processing (smoothing finish with acetone, etc).
+
+Good mechanical resistance, could be used for device cases.
+
+Degrades under UV (color degradation).
+
+### HIPS
+
+HDT: 97°C.
+
+Mostly used for ABS supports.
+
+Less shrinkage than ABS, but also less strength. Not so dense like PLA (weigh less).
+    
+Soft finish.
+
+Degrades under UV.
+
+### SBS
+
+HDT: 76°C.
+
+Semi-transparent.
+
+Non-toxic.
+
+Low shrinkage, high strength.
+
+Could be used in low temperatures.
+
+Low layer adhesion, 100% fill is recommended.
+
+### ASA
+
+HDT: 100°C.
+
+Like ABS, but resistant to UV.
+
+High shrinkage - could delaminate.
+
+### TPU (Thermoplastic polyurethane)
+
+Flexible material.
+
+Brands: Flexfill, eSUN
+
+### PA6
+
+HDT: 105°C.
+
+High rigidity, high durability, chemical resistance, mechanical strength.
+
+### PAHT
+
+?
+
+### PC
+
+### PC / ABS

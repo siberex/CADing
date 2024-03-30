@@ -6,6 +6,19 @@ My mini-tripod have this attachment hole and I want to make a ring to attach a h
 
 Also useful to hang tripod for storage or whatever.
 
+# Recommended parameters
+
+Materials:
+
+Hook: PLA
+
+Ring: PLA or PETG
+
+Recommended nozzle size: 0.1mm
+
+0.2mm will work too, threading is perfectly usable at 0.2mm resolution.
+
+
 # Prerequisites
 
 ```bash
