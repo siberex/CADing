@@ -1,0 +1,58 @@
+group() {
+	union() {
+		group() {
+			color([0.501961, 0.501961, 0.501961, 1]) {
+				multmatrix([[1, 0, 0, 0], [0, 1, 0, 3.74688], [0, 0, 1, 1.2], [0, 0, 0, 1]]) {
+					linear_extrude(height = 0.6, center = false, convexity = 1, scale = [1, 1], $fn = 64, $fa = 1, $fs = 1) {
+						text(text = "Sib.Li", size = 4.675, spacing = 1, font = "Fira Sans Condensed:style=SemiBold", direction = "ltr", language = "en", script = "Latn", halign = "center", valign = "center", $fn = 64, $fa = 1, $fs = 1);
+					}
+				}
+			}
+		}
+		group() {
+			color([0.501961, 0.501961, 0.501961, 1]) {
+				multmatrix([[1, 0, 0, 0], [0, 1, 0, -3.74688], [0, 0, 1, 1.2], [0, 0, 0, 1]]) {
+					linear_extrude(height = 0.6, center = false, convexity = 1, scale = [1, 1], $fn = 64, $fa = 1, $fs = 1) {
+						text(text = "+1 234 567-8900", size = 4.675, spacing = 1, font = "Fira Sans Condensed:style=SemiBold", direction = "ltr", language = "en", halign = "center", valign = "center", $fn = 64, $fa = 1, $fs = 1);
+					}
+				}
+			}
+		}
+		group() {
+			union() {
+				multmatrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.6], [0, 0, 0, 1]]) {
+					cube(size = [44.15, 14.9875, 1.2], center = true);
+				}
+				group() {
+					multmatrix([[1, 0, 0, 26.875], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]) {
+						linear_extrude(height = 1.2, center = false, convexity = 1, scale = [1, 1], $fn = 64, $fa = 1, $fs = 1) {
+							difference() {
+								offset(r = 5.8, $fn = 64, $fa = 1, $fs = 1) {
+									square(size = [1, 12.9875], center = true);
+								}
+								offset(r = 3, $fn = 64, $fa = 1, $fs = 1) {
+									square(size = [1, 12.9875], center = true);
+								}
+							}
+						}
+					}
+				}
+				group() {
+					multmatrix([[1, 0, 0, -26.875], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]) {
+						linear_extrude(height = 1.2, center = false, convexity = 1, scale = [1, 1], $fn = 64, $fa = 1, $fs = 1) {
+							difference() {
+								offset(r = 5.8, $fn = 64, $fa = 1, $fs = 1) {
+									square(size = [1, 12.9875], center = true);
+								}
+								offset(r = 3, $fn = 64, $fa = 1, $fs = 1) {
+									square(size = [1, 12.9875], center = true);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
