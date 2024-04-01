@@ -4,7 +4,15 @@ $fn = $preview ? 32 : 64;
 // https://github.com/adrianschlatter/threadlib?tab=readme-ov-file#installation
 use <threadlib/threadlib.scad>
 
-ring_thickness = 5;
+// Tripod screw, 1/4-20 UNC
+profile = "UNC-1/4-ext";    
+specs = thread_specs(profile);
+
+P = specs[0];
+Dsupport = specs[2]; // screw base cilinder diameter
+echo(Dsupport);
+
+ring_thickness = Dsupport; // render as thich as the screw stem (=4.9052)
 ring_inner_diameter = 14;
 
 ring_inner_radius = ring_inner_diameter / 2;
@@ -22,37 +30,42 @@ module ring() {
 }
 
 module screw_cilinder(turns = 5, extra_length = 2) {
-    // Tripod screw, 1/4-20 UNC
-    profile = "UNC-1/4-ext";    
-    specs = thread_specs(profile);
-    
+    H = (turns + 1) * P + extra_length;
+
     translate([0, 0, extra_length])
-    union() {
-        P = specs[0];
-        Dsupport = specs[2];
-        H = (turns + 1) * P + extra_length;
-        thread(profile, turns=turns, higbee_arc=50);
-        translate([0, 0, -P / 2 - extra_length])
-            cylinder(h=H, d=Dsupport, $fn=120);
-    };
+        union() {
+            thread(profile, turns=turns, higbee_arc=50);
+            translate([0, 0, -P / 2 - extra_length])
+                cylinder(h=H, d=Dsupport, $fn=120);
+        };
 }
 
 module model()
     union() {
         translate([0, extrusion_circle_radius + ring_outer_radius, 0])
-        ring();
+            ring();
 
         rotate ([90, 0, 0])
-        translate([0, 0, -1])
-        screw_cilinder();
+            translate([0, 0, -1])
+                screw_cilinder();
+    }
+    
+module cut_for_surface_table() {
+    cut_height = 2; // just to be sure, thread groove size will suffice though
+     
+    difference()
+    {
+        translate([0, 0, ring_thickness / 2]) // correct z-axis to place cut at 0
+            rotate([0, 180, 0]) // orient cut threads better
+                model();
+
+        #translate([0, 0, -cut_height])    
+            linear_extrude(height = cut_height)
+                offset(1) // extend projection perimeter
+                projection(cut=false)
+                    model();
     }
 
-translate([0, 0, -ring_thickness/2])
-difference()
-{
-    model();
-    translate([0, 0, ring_thickness / 2])
-        linear_extrude(height=1)
-            projection(cut=false)
-                model();
 }
+
+cut_for_surface_table();
