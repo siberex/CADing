@@ -1,6 +1,9 @@
 $fa = 1; $fs = 1;
 $fn = $preview ? 32 : 64;
 
+use <./fonts/FiraSansCondensed-SemiBold.ttf>
+use <./fonts/RobotoCondensed-VariableFont_wght.ttf>
+
 // Configurable >>>
 $line1 = "Sib.Li";
 $line2 = "+1 234 567-8900";
