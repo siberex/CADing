@@ -10,9 +10,8 @@ specs = thread_specs(profile);
 
 P = specs[0];
 Dsupport = specs[2]; // screw base cilinder diameter
-echo(Dsupport);
 
-ring_thickness = Dsupport; // render as thich as the screw stem (=4.9052)
+ring_thickness = Dsupport; // render as thick as the screw stem (=4.9052)
 ring_inner_diameter = 14;
 
 ring_inner_radius = ring_inner_diameter / 2;
@@ -24,9 +23,9 @@ module ring() {
     // https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/undersized_circular_objects
     fudge = 1/cos(180/fn);
     
-    rotate_extrude($fn = 100)
-    translate([ring_outer_radius, 0, 0])
-    circle(r = extrusion_circle_radius * fudge, $fn = fn);
+    rotate_extrude()
+        translate([ring_outer_radius, 0, 0])
+            circle(r = extrusion_circle_radius * fudge, $fn = fn);
 }
 
 module screw_cilinder(turns = 5, extra_length = 2) {
@@ -34,7 +33,8 @@ module screw_cilinder(turns = 5, extra_length = 2) {
 
     translate([0, 0, extra_length])
         union() {
-            thread(profile, turns=turns, higbee_arc=50);
+            rotate([0, 0, 180]) // to orient threads better
+                thread(profile, turns=turns, higbee_arc=50);
             translate([0, 0, -P / 2 - extra_length])
                 cylinder(h=H, d=Dsupport, $fn=120);
         };
@@ -56,8 +56,7 @@ module cut_for_surface_table() {
     difference()
     {
         translate([0, 0, ring_thickness / 2]) // correct z-axis to place cut at 0
-            rotate([0, 180, 0]) // orient cut threads better
-                model();
+            model();
 
         #translate([0, 0, -cut_height])    
             linear_extrude(height = cut_height)
