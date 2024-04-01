@@ -31,12 +31,16 @@ Provide `dx_offset` to align further from the left (or put two data lines in a s
 
 - Nozzle size: 0.2mm
 
-- `emboss_thickness` parameter: 
+- `emboss_thickness` parameter (in .scad file): 
     Embossed: 2 * step size is recommended
     Debossed: Equal to the first layer sise is recommended
 
 Debossed variant should be printed on a flat surface table facing down.
 
-! Use outer brim of at least 5mm.
+### Important slicer settings (either OrcaSlicer or PrusaSlicer):
+
+Wall generator: **Arachne**
+
+Use outer brim of at least 5mm.
 
 Otherwise PLA will bend at that size and peel off of the table.
