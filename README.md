@@ -1,6 +1,8 @@
 # CADing
 
-Umbrella repo for various 3D-printing and CAD-modeling projects
+Umbrella repo for various 3D-printing and CAD-modeling projects.
+
+All models are created with FDM printing in mind.
 
 
 # Contents
