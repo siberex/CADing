@@ -22,9 +22,8 @@ Hasanain Shuja.
 
 ## Auxilary 3D models used
 
-- [JST 2.54x3P](https://grabcad.com/library/jst-2-54-2p-6p-1).
+- [JST 2.54x3P](https://grabcad.com/library/jst-2-54-2p-6p-1)
 
-- [hex spacer standoff nuts](https://github.com/animevietsub/MY_ALTIUM_LIBRARY/tree/main/Step).
+- [Hexagonal spacers M2.5](https://grabcad.com/library/hexagonal-spacers-m2-5-f-f-hex-5-1)
 
 - [Pin Header 2.54×20](https://grabcad.com/library/pin-header-2-54-4)
-
