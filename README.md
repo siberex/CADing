@@ -18,6 +18,8 @@ All models are created with FDM printing in mind.
 
 # References and notes
 
+As a rule of thumb: layer height should be = 1/2 nozzle diameter
+
 ## Filament types
 
 ### PLA

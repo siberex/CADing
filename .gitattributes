@@ -1,11 +1,2 @@
-PiKVM_Case/pikvm_case_01.FCStd filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_02.FCStd filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/assets filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_02.20240409-054222.FCBak filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_03.20240409-054509.FCBak filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_03.FCStd filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_04.20240409-060403.FCBak filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_04.FCStd filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_05.20240409-063015.FCBak filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_05.FCStd filter=lfs diff=lfs merge=lfs -text
-PiKVM_Case/pikvm_case_01.20240409-035014.FCBak filter=lfs diff=lfs merge=lfs -text
+PiKVM_Case/assets/* filter=lfs diff=lfs merge=lfs -text
+PiKVM_Case/*.FCStd filter=lfs diff=lfs merge=lfs -text
