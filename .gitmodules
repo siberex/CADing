@@ -1,0 +1,3 @@
+[submodule "tools/easyeda2kicad.py"]
+	path = tools/easyeda2kicad.py
+	url = git@github.com:uPesy/easyeda2kicad.py.git
