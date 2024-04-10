@@ -13,8 +13,9 @@ All models are created with FDM printing in mind.
 
 - [Ursula_Collar_Tag](/Ursula_Collar_Tag/) — Configurable pet collar tag for cats, dogs or your domestic wombat.
 
-- [Seamstress_Ruler](/Seamstress_Ruler/) — Parametrically-customizable seam guide (sewing gauge) for quilting/sewing
+- [Seamstress_Ruler](/Seamstress_Ruler/) — Parametrically-customizable seam guide (sewing gauge) for quilting/sewing.
 
+- [PiKVM case](/PiKVM_Case/) — Casing for PiKVM v1.
 
 # References and notes
 
