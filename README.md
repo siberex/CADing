@@ -21,6 +21,23 @@ All models are created with FDM printing in mind.
 
 As a rule of thumb: layer height should be = 1/2 nozzle diameter
 
+# Slicer Software
+
+- [UltiMaker Cura](https://ultimaker.com/software/ultimaker-cura/)
+    - [Snapmaker Luban](https://github.com/Snapmaker/Luban) — uses forked [CuraEngine](https://github.com/Snapmaker/LunarSlicer)
+
+- [Slic3r](https://github.com/slic3r/Slic3r) forks (Slic3r itself is not maintained anymore):
+    - [PrusaSlicer](https://github.com/prusa3d/PrusaSlicer)
+    - [SuperSlicer](https://github.com/supermerill/SuperSlicer)
+    - [OrcaSlicer](https://github.com/SoftFever/OrcaSlicer) — [Bambu Studio](https://github.com/bambulab/BambuStudio) fork
+    - [QIDISlicer](https://github.com/QIDITECH/QIDISlicer)
+
+- [Raise3D ideaMaker](https://www.raise3d.com/ideamaker/)
+
+- [Simplify 3D](https://www.simplify3d.com/) — $199 / user
+
+- [Flashforge Flashprint](https://www.flashforge.com/product-detail/FlashPrint-slicer-for-flashforge-fdm-3d-printers)
+
 ## Filament types
 
 ### PLA
