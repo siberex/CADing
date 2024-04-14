@@ -19,6 +19,8 @@ This casing is using Raspberry Pi 3B with Pico H.
 
 - Raspberry Pico H (or Pico with soldered pin headers)
 
+- 14× Pin headers bent
+
 - 14× short dupont jumper wires female-female
 
 - 8× long dupont jumper wires female-female (to connect ATX)
@@ -27,9 +29,25 @@ This casing is using Raspberry Pi 3B with Pico H.
 
 - x4 Omron G3VM-61A1 opto-couplers
 
+    Substitutions — any `1 Form A` **MOSFET output** solid state relay:
+
+    - [Mouser](https://eu.mouser.com/c/electromechanical/relays-contactors-solenoids/solid-state-relays-ssr/solid-state-relays-pcb-mount/?output%20type=MOSFET&package%20%2F%20case=DIP-4&relay%20contact%20form=1%20Form%20A%20%28SPST-NO%29&instock=y)
+    
+    - [LCSC](https://www.lcsc.com/products/Solid-State-Relay-MOS-Output_919.html)
+
 - x4 390 Ohm resistors through-the-hole
 
 - x2 4.7 kOhm resistors through-the-hole
+
+- 5V 40x40x10mm Fan, [Noctua NF-A4x10 regular or PWM](https://noctua.at/en/nf-a4x10-5v-pwm) is recommended
+
+- 4x screws
+
+- 9x Heat set inserts M2x3x3.5
+
+- 9x M2 screws
+
+- 4x magnets
 
 - USB-A to Micro-USB cable
 

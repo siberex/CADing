@@ -1,6 +1,6 @@
 G04 Layer: TopSolderMaskLayer*
-G04 EasyEDA v6.5.42, 2024-04-10 21:16:21*
-G04 ae8b629287ab4b0caee4e3ce040d50bf,edc686363fba4cf3ab42fed1df3dfb96,10*
+G04 EasyEDA v6.5.42, 2024-04-14 08:23:14*
+G04 abd19322571a44f98d038d1a9037bddd,edc686363fba4cf3ab42fed1df3dfb96,10*
 G04 Gerber Generator version 0.2*
 G04 Scale: 100 percent, Rotated: No, Reflected: No *
 G04 Dimensions in millimeters *
@@ -17,6 +17,7 @@ G04 leading zeros omitted , absolute positions ,4 integer and 5 decimal *
 %ADD15C,1.9016*%
 %ADD16MACRO1,0.1016X0.9X-0.9X-0.9X-0.9*%
 %ADD17MACRO1,0.1016X-0.9X0.9X0.9X0.9*%
+%ADD18C,3.0000*%
 
 %LPD*%
 D10*
@@ -120,4 +121,9 @@ X3175508Y6846925D03*
 D17*
 G01*
 X3174484Y7630937D03*
+D18*
+G75*
+G01
+X2550490Y5841975D02*
+G03X2550490Y5841975I-137490J0D01*
 M02*
