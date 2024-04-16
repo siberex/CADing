@@ -25,9 +25,9 @@ This casing is using Raspberry Pi 3B with Pico H.
 
 - 8× long dupont jumper wires female-female (to connect ATX)
 
-- 1N5819 diode
+- 1x 1N5819 diode
 
-- x4 Omron G3VM-61A1 opto-couplers
+- 4x Omron G3VM-61A1 opto-couplers
 
     Substitutions — any `1 Form A` **MOSFET output** solid state relay:
 
@@ -35,23 +35,27 @@ This casing is using Raspberry Pi 3B with Pico H.
     
     - [LCSC](https://www.lcsc.com/products/Solid-State-Relay-MOS-Output_919.html)
 
+    PC814 or even PC817 could alo be used, but it tends to be less sensitive.
+
 - x4 390 Ohm resistors through-the-hole
 
 - x2 4.7 kOhm resistors through-the-hole
 
-- 5V 40x40x10mm Fan, [Noctua NF-A4x10 regular or PWM](https://noctua.at/en/nf-a4x10-5v-pwm) is recommended
+- (Optional) Fan **5V** 40x40x10mm (4010) Fan, recommended 4-pin PWM, like [Noctua NF-A4x10 PWM](https://noctua.at/en/nf-a4x10-5v-pwm).
+    
+    Non-PWM (3-pin) will work fine, 40x40x20mm (4020) will work too, 12V and 2-pin is also acceptable.
 
-- 4x screws
+- (Optional) 4x FAN screws
 
-- 9x Heat set inserts M2x3x3.5
+- 4x Heat set inserts M2*4*3.5
 
-- 9x M2 screws
+- 4x M2*10 (2#*3/8) screws
 
-- 4x magnets
+- 9x M2*4 screws
+
+- 4x magnets, D=10mm H=2mm
 
 - USB-A to Micro-USB cable
-
-TODO: Screws, hex spacers...
 
 
 # PiKVM setup
@@ -90,14 +94,16 @@ TODO: Share publicly [EasyEDA project](https://easyeda.com/editor#id=10361afddc3
 - [Raspberry Pico model](https://grabcad.com/library/raspberry-pi-pico-r3-1) by 
 Hasanain Shuja.
 
-- [HDMI SMT Socket model](https://grabcad.com/library/hdmi-socket-smt-1) by [Volodymyr Rovinskyi](https://g-mak.com.ua/en).
+### Auxilary 3D models used
 
-## Auxilary 3D models used
+- [HDMI SMT Socket model](https://grabcad.com/library/hdmi-socket-smt-1) by [Volodymyr Rovinskyi](https://g-mak.com.ua/en)
 
 - [JST 2.54x3P](https://grabcad.com/library/jst-2-54-2p-6p-1)
-
-- [Hexagonal spacers M2.5](https://grabcad.com/library/hexagonal-spacers-m2-5-f-f-hex-5-1)
 
 - [Pin Header 2.54×20](https://grabcad.com/library/pin-header-2-54-4)
 
 - [Arduino Female Pin Header for KiCAD](https://grabcad.com/library/arduino-female-pin-header-for-kicad-1)
+
+## Other
+
+Cat pattern is inspired by [Halloween Cat Tessellation Collaborative Art Project](https://www.twinkl.com.ng/resource/halloween-cat-tessellation-collaborative-art-project-cfe-m-1655838161) from Twinkl
