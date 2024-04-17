@@ -1,0 +1,12 @@
+Category	Name	Value	Notes
+rpi	support_tube_height	4.2
+rpi	support_tube_inner_radius	1.35
+rpi	support_tube_outer_radius	3.5	NOT MORE THAN 3.6
+pico	support_tube_height	8.4
+pico	support_tube_inner_radius	1.05
+pico	support_tube_outer_radius	2	NOT MORE THAN 2
+case	top_boards_z	24
+case	support_tube_top_height	4
+case	support_tube_top_inner_radius	1.35
+case	support_tube_top_outer_radius	3.5
+case	wall_thickness	2.2
