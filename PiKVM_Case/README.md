@@ -91,10 +91,14 @@ TODO: Share publicly [EasyEDA project](https://easyeda.com/editor#id=10361afddc3
     - [Raspberry Pi 3](https://grabcad.com/library/raspberry-pi-3-3) by Mena Cos.
     - [Raspberry Pi 3](https://grabcad.com/library/raspberry-pi-3-2) by Bilal.
 
+- [Raspberry Pi 4 model](https://grabcad.com/library/raspberry-pi-4-model-b-1) by Hasanain Shuja.
+
 - [Raspberry Pico model](https://grabcad.com/library/raspberry-pi-pico-r3-1) by 
 Hasanain Shuja.
 
 ### Auxilary 3D models used
+
+- [4010 fan](https://grabcad.com/library/noctua-fan-nf-a4x10_40mm-1)
 
 - [HDMI SMT Socket model](https://grabcad.com/library/hdmi-socket-smt-1) by [Volodymyr Rovinskyi](https://g-mak.com.ua/en)
 
