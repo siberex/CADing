@@ -47,11 +47,11 @@ This casing is using Raspberry Pi 3B with Pico H.
 
 - (Optional) 4x FAN screws
 
-- 4x Heat set inserts M2*4*3.5
+- 4x Heat set inserts M2\*4\*3.5
 
-- 4x M2*10 (2#*3/8) screws
+- 4x M2\*10 (2#\*3/8) screws
 
-- 9x M2*4 screws
+- 9x M2\*4 screws
 
 - 4x magnets, D=10mm H=2mm
 
