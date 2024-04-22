@@ -1,12 +1,25 @@
 # PiKVM Case
 
-FreeCAD model. WORK IN PROGRESS.
+FreeCAD model.
 
 Casing for [PiKVM v1](https://pikvm.org/) — project by Maxim Devaev which converts your Raspberry Pi to the fully-featured [IP KVM](https://en.wikipedia.org/wiki/KVM_switch#KVM_over_IP_(IPKVM)) (aka little box that allows you to control your PC remotely without software layer like RDP, so you can control BIOS and even trigger Reset button).
 
 Uses HDMI to CSI bridge based on the [Toshiba TC358743XBG](https://toshiba.semicon-storage.com/eu/semiconductor/product/interface-bridge-ics-for-mobile-peripheral-devices/hdmir-interface-bridge-ics/detail.TC358743XBG.html) chip.
 
 This casing is using Raspberry Pi 3B with Pico H.
+
+# Printing
+
+Bottom part could be printed without supports.
+
+Top part have to be printed with supports.
+
+0.4 nozzle, 0.2 step size works fine.
+
+Recommended material: PLA Matte
+
+If you want to see LEDs blinking, use short pieces of transparent filament as a light guides (just shove into the holes and trim to the surface).
+
 
 
 # Bill of Materials
@@ -42,8 +55,10 @@ This casing is using Raspberry Pi 3B with Pico H.
 - x2 4.7 kOhm resistors through-the-hole
 
 - (Optional) Fan **5V** 40x40x10mm (4010) Fan, recommended 4-pin PWM, like [Noctua NF-A4x10 PWM](https://noctua.at/en/nf-a4x10-5v-pwm).
+
+    Substitutions: PA4010S05HN2, MF40100V2-1D05C-SAA, AF40100V1-1Q04C-S99.
     
-    Non-PWM (3-pin) will work fine, 40x40x20mm (4020) will work too, 12V and 2-pin is also acceptable.
+    Non-PWM (3-pin) will work fine, 40x40x20mm (4020) will work too, 12V and 2-pin are also acceptable options.
 
 - (Optional) 4x FAN screws
 
