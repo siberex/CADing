@@ -108,8 +108,7 @@ TODO: Share publicly [EasyEDA project](https://easyeda.com/editor#id=10361afddc3
 
 - [Raspberry Pi 4 model](https://grabcad.com/library/raspberry-pi-4-model-b-1) by Hasanain Shuja.
 
-- [Raspberry Pico model](https://grabcad.com/library/raspberry-pi-pico-r3-1) by 
-Hasanain Shuja.
+- [Raspberry Pico reference model](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html#pinout-and-design-files).
 
 ### Auxilary 3D models used
 

@@ -1,24 +1,24 @@
-Category	Name	Value	Notes
-rpi	support_tube_height	4.2
-rpi	support_tube_inner_radius	1.1	default 1.35
-rpi	support_tube_outer_radius	4	NOT MORE THAN 4, default 3.5
-pico	support_tube_height	3
-pico	support_tube_inner_radius	0.8	default 1.05
-pico	support_tube_outer_radius	1.9	NOT MORE THAN 2
-case	top_boards_z	26
-c790	support_tube_height	3
-c790	support_tube_inner_radius	0.8	default 1.35
-c790	support_tube_outer_radius	3.5
-case	wall_thickness	2.2
-atx	support_tube_height	2.75
-atx	support_tube_inner_radius	0.8	default 1.35
-atx	support_tube_outer_radius	4	default 3.5
-fan	screw_holes_radius	2.35
-bolt	cutaway_diameter_head	4
-bolt	cutaway_diameter_shaft	2.2
-bolt	cutaway_length_head	2
-bolt	cutaway_length_shaft	10
-case	magnet_diameter	10.2	Use 8.2 for smaller diameter magnets
-case	magnet_thickness	2
-case	heat_inset_diameter	3
-case	heat_inset_length	4
+Category	Name	Value	Notes	Status
+rpi	support_tube_height	4.2		ok
+rpi	support_tube_inner_radius	1	not used, actual hole size = bolt.cutaway_diameter_shaft/2	ok
+rpi	support_tube_outer_radius	4	NOT MORE THAN 4, default 3.5	ok
+pico	support_tube_height	3		ok
+pico	support_tube_inner_radius	1.15	default 1.05	updated	note this
+pico	support_tube_outer_radius	1.9	NOT MORE THAN 2	updated
+case	top_boards_z	26		ok
+c790	support_tube_height	3		ok
+c790	support_tube_inner_radius	1.35	default 1.35	updated	note this
+c790	support_tube_outer_radius	3.9	MIN 3.9	ok
+case	wall_thickness	2.2		ok
+atx	support_tube_height	2.75		ok
+atx	support_tube_inner_radius	1.35	default 1.35	updated	note this
+atx	support_tube_outer_radius	4	default 3.5	ok
+fan	screw_holes_radius	2.45	target D = 4.9	updated
+bolt	cutaway_diameter_head	5	4 + 0.7 clearance gap + 0.3 printing gap	updated
+bolt	cutaway_diameter_shaft	3.3	2.2 M2 + 0.7 clearance gap + 0.4 printing gap	updated
+bolt	cutaway_length_head	2		ok
+bolt	cutaway_length_shaft	10		ok
+case	magnet_diameter	10.2	Use 8.2 for smaller diameter magnets	ok
+case	magnet_thickness	2		ok
+case	heat_inset_diameter	3.4		updated
+case	heat_inset_length	4		ok
