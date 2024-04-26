@@ -8,7 +8,7 @@ short_form = false;
 
 holes_diameter = 2.8;
 
-holes_dy = 6.8; // 5.6;
+holes_dy = 7.3;
 holes_dx1 = short_form ? 15 : 35;
 holes_dx2 = holes_dx1 + 40;
 
@@ -24,9 +24,9 @@ difference() {
         ]
     );
     
-    translate([1, 14/2 + 2, short_form ? 45 : 65])
+    translate([1, 14/2 + 1.7, short_form ? 44.2 : 65])
         rotate([90, 0, 90])
-            rounded_cube(width = 14, height = 16.5, depth = 5, radius = 1.5);
+            rounded_cube(width = 14, height = 16.5, depth = 5, radius = 0.5);
 }
 
 module rounded_cube(width = 10, height = 10, depth = 10, radius = 2, center = true) {
@@ -36,4 +36,3 @@ module rounded_cube(width = 10, height = 10, depth = 10, radius = 2, center = tr
             square([width - 2*radius, height - 2*radius], center);
     
 }
-
