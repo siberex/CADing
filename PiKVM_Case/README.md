@@ -90,6 +90,8 @@ Check out exported gerber files in the [ATX_PCB](./ATX_PCB/) dir.
 
 Both single-sided and double-sided versions are available.
 
+Recommended PCB thickness: from 1 to 1.2 mm.
+
 Single-sided version is also exported [in PDF format](./ATX_PCB/pdf_single_layer/back.pdf) for printing at home.
 
 Components are named to closely mimic [the original schematic](https://docs.pikvm.org/v1/v1_scheme.png).
@@ -97,7 +99,25 @@ Components are named to closely mimic [the original schematic](https://docs.pikv
 TODO: Share publicly [EasyEDA project](https://easyeda.com/editor#id=10361afddc3f4134ae8cebcdb68e18ef|33e11979f03a4932974794a9883380c7)
 
 
+# ATX breakout board (PC side)
+
+Recommended PCB thickness: 1.2 mm.
+
+PCI bracket models:
+
+- See [../ATX_PCI_bracket] (recommended, both full-size and low-profile brackets are fully compatible with the PCB).
+    Pair of M2.5 screws with nuts and washers are needed to assemble.
+
+- https://docs.pikvm.org/stl/atx/ (both models are compatible with the PCB, but low-profile model is WRONG - incorrect tab direction), no screws needed to assemble.
+
+- https://www.thingiverse.com/thing:3089065 (correctly-modeled semi-compatible low-profile PCI bracket, could be used with minor post-print modifications)
+
+
+
+
 # Acknolegements
+
+[PCI Bracket Generator](https://www.thingiverse.com/thing:2836187) by [Roy Allen Sutton](https://github.com/royasutton) used to create PC side ATX board bracket.
 
 ## 3D assets used
 
