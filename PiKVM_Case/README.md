@@ -111,7 +111,7 @@ If you want to see LEDs blinking, use short pieces of transparent filament as a 
 - pin 23 (GPIO 11) – pico pin 24 (GP18)
 
 
-### C790
+### [C790](https://wiki.geekworm.com/C790)
 
 I2S connector (actual wire colors could differ):
 
