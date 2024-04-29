@@ -24,13 +24,15 @@ If you want to see LEDs blinking, use short pieces of transparent filament as a 
 
 # Bill of Materials
 
-- Raspberry Pi 3B
+- Raspberry Pi 3B, 3B+ or Pi 4B
 
 - TC358743 HDMI to CSI adapter, [C790](https://wiki.blicube.com/blikvm/en/hdmi-csi-i2s/) or similar 
 
 - [CSI-2 flex cable (15-pin)](https://www.arducam.com/raspberry-pi-camera-pinout/)
 
 - Raspberry Pico H (or Pico with soldered pin headers)
+
+    With rPi 4B Pico board is optional, [splitter can be used instead](https://wiki.blicube.com/blikvm/en/usb-splitter-guide/)
 
 - 14× Pin headers bent
 
@@ -75,13 +77,68 @@ If you want to see LEDs blinking, use short pieces of transparent filament as a 
 
 # PiKVM setup
 
-1. [Raspberry Pi 3 set up](https://docs.pikvm.org/v1/#setting-up-the-hardware)
+1. Raspberry Pi setup, depending on the model:
 
-2. [Pico board set up](https://docs.pikvm.org/pico_hid/). 
+    a. [Pi 3 set up](https://docs.pikvm.org/v1/#setting-up-the-hardware)
+
+    b. [Pi 4 set up](https://docs.pikvm.org/v2/#required-parts) – skip power supply splitter part if using Pico board (recommended)
+
+2. Flash image
+
+    https://docs.pikvm.org/flashing_os/
+
+    https://wiki.blicube.com/blikvm/en/flashing_os/
+
+
+2. [Pico board set up](https://docs.pikvm.org/pico_hid/#flashing-the-firmware).
 
     TLDR: [grab firmware here](https://github.com/pikvm/kvmd/releases) and flash.
 
 3. Optional ATX board set up (see below)
+
+
+## Pin header connections
+
+### [Pico](https://datasheets.raspberrypi.com/pico/Pico-R3-A4-Pinout.pdf)
+
+- pin 4 – 1N5819 diode (+5VCC) `->|-` pico pin 39 (VSYS)
+- pin 36 (GPIO 16) – pico pin 36 (3V3_OUT)
+- pin 22 (GPIO 25) – pico pin 30 (RUN)
+- pin 20 – GND, pico pin 28
+- pin 26 (GPIO 7) – pico pin 27 (GP21)
+- pin 19 (GPIO 10) – pico pin 26 (GP20)
+- pin 21 (GPIO 9) – pico pin 25 (GP19)
+- pin 23 (GPIO 11) – pico pin 24 (GP18)
+
+
+### C790
+
+I2S connector (actual wire colors could differ):
+
+- pin 12 (GPIO 18) – i2s SCK, white
+- pin 38 (GPIO 20) – i2s SD, blue
+- pin 35 (GPIO 19) – i2s WFS, yellow
+- pin 6 – GND, black
+
+
+### Fan
+
+- pin 2 – +5VCC
+- pin 14 – GND (Fan)
+- pin 31 (GPIO 6) – Tachometer signal output
+- pin 32 (GPIO 12) – PWM signal input
+
+
+### ATX board
+
+From left to right:
+
+- pin 16 (GPIO 23) – Power switch
+- pin 13 (GPIO 27) – Reset switch
+- pin 18 (GPIO 24) – Power LED
+- pin 15 (GPIO 22) – HDD LED
+- pin 25 – GND (ATX)
+- pin 1 (or 17) – +3.3VCC
 
 
 # ATX board
@@ -94,7 +151,7 @@ Recommended PCB thickness: from 1 to 1.2 mm.
 
 Single-sided version is also exported [in PDF format](./ATX_PCB/pdf_single_layer/back.pdf) for printing at home.
 
-Components are named to closely mimic [the original schematic](https://docs.pikvm.org/v1/v1_scheme.png).
+Components are named to exactly mimic [the original schematic](https://docs.pikvm.org/v1/v1_scheme.png).
 
 TODO: Share publicly [EasyEDA project](https://easyeda.com/editor#id=10361afddc3f4134ae8cebcdb68e18ef|33e11979f03a4932974794a9883380c7)
 
