@@ -2,7 +2,7 @@
 
 TODO: add link to the PCB
 
-
+Recommended material: PA6-CF
 
 Important: slice model so major axis will be along the layer direction.
 
