@@ -26,8 +26,7 @@ Wall generator: **Arachne**
 
 Wall loops: 4
 
-If you want to see LEDs blinking, use short pieces of transparent filament as a light guides (just shove into the holes and trim to the surface with Exacto).
-
+If you want to have rPi status LEDs visibility, use short pieces of transparent filament as light guides (just shove them into the holes and trim to the surface with Exacto).
 
 
 # Bill of Materials
@@ -48,7 +47,7 @@ If you want to see LEDs blinking, use short pieces of transparent filament as a 
 
     Note: [Auvidea B10X](https://auvidea.eu/download/manual/B10x_technical_reference_1.4.pdf) boards are NOT compatible.
 
-- [CSI-2 flex cable (15-pin)](https://www.arducam.com/raspberry-pi-camera-pinout/), usually comes with adapter.
+- [CSI-2 flex cable (15-pin)](https://www.arducam.com/raspberry-pi-camera-pinout/), usually comes with the adapter.
 
 - Raspberry Pico H (or Pico with soldered pin headers)
 
@@ -174,6 +173,17 @@ Single-sided version is also exported [in PDF format](./ATX_PCB/pdf_single_layer
 Components are named to exactly mimic [the original schematic](https://docs.pikvm.org/v1/v1_scheme.png).
 
 TODO: Share publicly [EasyEDA project](https://easyeda.com/editor#id=10361afddc3f4134ae8cebcdb68e18ef|33e11979f03a4932974794a9883380c7)
+
+
+## ATX plug
+
+See `export/atx_plug.step`.
+
+Recommended material: PETG.
+
+Could be used to better arrange dupont cables.
+
+Assemble dupont female connectors in order, insert into the printed plug so they slightly protrude from the plug end, apply superglue, align connectors to the plug end and and press firmly. 
 
 
 # ATX breakout board (PC side)
