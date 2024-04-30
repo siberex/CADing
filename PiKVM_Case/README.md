@@ -16,9 +16,17 @@ Top part have to be printed with supports.
 
 0.4 nozzle, 0.2 step size works fine.
 
+Variable layer thickness is recommended.
+
 Recommended material: PLA Matte
 
-If you want to see LEDs blinking, use short pieces of transparent filament as a light guides (just shove into the holes and trim to the surface).
+Scarf joint seam: Contour (scarf length: 10; scarf steps: 5)
+
+Wall generator: **Arachne**
+
+Wall loops: 4
+
+If you want to see LEDs blinking, use short pieces of transparent filament as a light guides (just shove into the holes and trim to the surface with Exacto).
 
 
 
@@ -26,9 +34,21 @@ If you want to see LEDs blinking, use short pieces of transparent filament as a 
 
 - Raspberry Pi 3B, 3B+ or Pi 4B
 
-- TC358743 HDMI to CSI adapter, [C790](https://wiki.blicube.com/blikvm/en/hdmi-csi-i2s/) or similar 
+- [C790](https://wiki.geekworm.com/C790) TC358743 HDMI to CSI adapter. C790 is recommended due to backpower protection.
 
-- [CSI-2 flex cable (15-pin)](https://www.arducam.com/raspberry-pi-camera-pinout/)
+    Substitutions (geometrically-compatibile):
+
+    - [C780](https://wiki.blicube.com/blikvm/en/hdmi-csi-i2s/#c780)
+
+    - [Waveshare HDMI To CSI Adapter](https://www.waveshare.com/hdmi-to-csi-adapter.htm)
+
+    - [X630 Module](https://wiki.geekworm.com/X630) is **partially** compatible (two-screw attachment instead of four)
+    
+    Note: C779 is NOT compatible.
+
+    Note: [Auvidea B10X](https://auvidea.eu/download/manual/B10x_technical_reference_1.4.pdf) boards are NOT compatible.
+
+- [CSI-2 flex cable (15-pin)](https://www.arducam.com/raspberry-pi-camera-pinout/), usually comes with adapter.
 
 - Raspberry Pico H (or Pico with soldered pin headers)
 
@@ -118,7 +138,7 @@ I2S connector (actual wire colors could differ):
 - pin 12 (GPIO 18) – i2s SCK, white
 - pin 38 (GPIO 20) – i2s SD, blue
 - pin 35 (GPIO 19) – i2s WFS, yellow
-- pin 6 – GND, black
+- pin 6 or 39 – GND, black
 
 
 ### Fan
@@ -149,7 +169,7 @@ Both single-sided and double-sided versions are available.
 
 Recommended PCB thickness: from 1 to 1.2 mm.
 
-Single-sided version is also exported [in PDF format](./ATX_PCB/pdf_single_layer/back.pdf) for printing at home.
+Single-sided version is also exported [in PDF format](./ATX_PCB/pdf_single_layer/back.pdf) for laser-printing and DIY-etching at home.
 
 Components are named to exactly mimic [the original schematic](https://docs.pikvm.org/v1/v1_scheme.png).
 
@@ -169,6 +189,10 @@ PCI bracket models:
 
 - https://www.thingiverse.com/thing:3089065 (correctly-modeled semi-compatible low-profile PCI bracket, could be used with minor post-print modifications)
 
+
+# Software
+
+[Testing HDMI to CSI-2 adapter](https://wiki.geekworm.com/C779-Software)
 
 
 
