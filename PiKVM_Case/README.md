@@ -2,11 +2,30 @@
 
 FreeCAD model.
 
-Casing for [PiKVM v1](https://pikvm.org/) — project by Maxim Devaev which converts your Raspberry Pi to the fully-featured [IP KVM](https://en.wikipedia.org/wiki/KVM_switch#KVM_over_IP_(IPKVM)) (aka little box that allows you to control your PC remotely without software layer like RDP, so you can control BIOS and even trigger Reset button).
+Casing for [PiKVM v1](https://pikvm.org/) — project by Maxim Devaev which converts your Raspberry Pi to a fully-featured [IP KVM](https://en.wikipedia.org/wiki/KVM_switch#KVM_over_IP_(IPKVM)) (aka little box that allows you to control your PC remotely without a software layer like RDP, so you can control BIOS and even trigger Reset button).
+
+Main features:
+
+- Compact volumetric footprint (109.7 × 60.7 × 38.1 mm)
+
+- All extra connections on a single side of the case, eliminating octopus wiring
+
+- Broad compatibility (rPi 3, rPi 4 and any geometrically-compatible boards)
+
+- Optional ATX connectivity with dupont wires or RJ45 connector (all additional PCBs and models to print are provided)
+
+- Ability to use as a self-sufficient Raspberry Pi enclosure
+
+- Optional cooling fan, in case you want to run some additional loads. PiKVM by itself does not require it and will work just fine with passive ventilation holes.
+
+- Recessments for magnets for easy attachment to the PC case
+
 
 Uses HDMI to CSI bridge based on the [Toshiba TC358743XBG](https://toshiba.semicon-storage.com/eu/semiconductor/product/interface-bridge-ics-for-mobile-peripheral-devices/hdmir-interface-bridge-ics/detail.TC358743XBG.html) chip.
 
-This casing is using Raspberry Pi 3B with Pico H.
+This enclosure could be used with Raspberry Pi 3B (with Pico H) or Raspberry Pi 4B (with either USB-C splitter or Pico board for HID device emulation).
+
+
 
 # Printing
 
