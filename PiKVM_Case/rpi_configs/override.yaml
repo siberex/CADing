@@ -1,0 +1,69 @@
+kvmd:
+    info:
+        hw:
+            ignore_past: false
+        fan:
+            unix: /run/kvmd/fan.sock
+
+    # Wake on LAN
+    wol:
+        mac: ff:ff:ff:ff:ff:ff
+
+    # https://docs.pikvm.org/pico_hid/#the-final-steps
+    hid:
+        type: spi
+        chip: 0
+        bus: 0
+        sw_cs_pin: 7
+        sw_cs_per_byte: true
+        reset_pin: 25
+        reset_inverted: true
+        reset_self: true
+        power_detect_pin: 16
+        power_detect_pull_down: true
+        jiggler:
+            enabled: true
+
+    atx:
+        type: gpio
+        power_led_pin: 24
+        hdd_led_pin: 22
+        power_switch_pin: 23
+        reset_switch_pin: 27
+
+    msd:
+        type: disabled
+
+    gpio:
+        drivers:
+        scheme:
+
+    streamer:
+        h264_bitrate:
+            default: 5000
+        cmd:
+            - "/usr/bin/ustreamer"
+            - "--device=/dev/kvmd-video"
+            - "--persistent"
+            - "--dv-timings"
+            - "--format=uyvy"
+            - "--format-swap-rgb"
+            - "--buffers=8"
+            - "--encoder=m2m-image"
+            - "--workers=3"
+            - "--quality={quality}"
+            - "--desired-fps={desired_fps}"
+            - "--drop-same-frames=30"
+            - "--unix={unix}"
+            - "--unix-rm"
+            - "--unix-mode=0660"
+            - "--exit-on-parent-death"
+            - "--process-name-prefix={process_name_prefix}"
+            - "--notify-parent"
+            - "--no-log-colors"
+            - "--jpeg-sink=kvmd::ustreamer::jpeg"
+            - "--jpeg-sink-mode=0660"
+            - "--h264-sink=kvmd::ustreamer::h264"
+            - "--h264-sink-mode=0660"
+            - "--h264-bitrate={h264_bitrate}"
+            - "--h264-gop={h264_gop}"
