@@ -1,0 +1,1 @@
+root=LABEL=PIROOT ro rootwait cma=256M fsck.repair=yes audit=0
